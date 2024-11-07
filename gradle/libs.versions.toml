@@ -1,0 +1,12 @@
+[versions]
+spring = "3.3.5"
+lombok = "1.18.24"
+
+[libraries]
+spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
+spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
+spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+[plugins]
+spring = { id = "org.springframework.boot", version.ref = "spring" }
