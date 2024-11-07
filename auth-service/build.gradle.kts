@@ -13,11 +13,8 @@ repositories {
 dependencies {
     implementation(libs.spring.starter)
     implementation(libs.spring.web)
-    implementation(libs.spring.jpa)
-    compileOnly(libs.lombok)
-    annotationProcessor(libs.lombok)
 }
 
-tasks.test{
+tasks.withType<Test> {
     useJUnitPlatform()
 }
