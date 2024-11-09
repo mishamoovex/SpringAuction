@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.spring.starter)
-    implementation(libs.spring.web)
+    implementation(libs.bundles.data.service)
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
