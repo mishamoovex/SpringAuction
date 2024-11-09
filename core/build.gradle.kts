@@ -3,6 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.spring.persistance)
+    implementation(libs.hibernate)
     implementation(libs.spring.web)
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
