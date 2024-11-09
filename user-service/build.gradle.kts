@@ -4,6 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.spring.starter)
-    implementation(libs.spring.web)
+    implementation(libs.bundles.data.service)
 }
