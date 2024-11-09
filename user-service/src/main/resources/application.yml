@@ -3,8 +3,12 @@ spring:
     name: user-service
   datasource:
     url: jdbc:postgresql://localhost:5432/user
-    username: postgres
+    username: user
     password: password
-
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog.xml
