@@ -1,12 +1,17 @@
 [versions]
 spring = "3.3.5"
 lombok = "1.18.24"
+postgresql = "42.5.0"
 
 [libraries]
 spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 
 [plugins]
 spring = { id = "org.springframework.boot", version.ref = "spring" }
+
+[bundles]
+data-service = ["spring-starter", "spring-web", "spring-jpa", "postgresql"]
