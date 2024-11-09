@@ -6,6 +6,7 @@ import com.lead.service.user.model.User;
 import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    @Transactional
     @Override
     public User save(RegisterRequestDTO request) {
         User entity = User.builder()
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(entity);
     }
 
+    @Transactional
     @Override
     public User update(User user) {
         User currentUser = findById(user.getId());
@@ -42,6 +45,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void delete(String id) {
         User currentUser = findById(id);
