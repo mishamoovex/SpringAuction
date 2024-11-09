@@ -3,13 +3,15 @@ lombok = "1.18.34"
 spring = "3.3.5"
 postgresql = "42.5.0"
 liquibase = "4.30.0"
+persistance = "3.2.0"
 
 [libraries]
 spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+spring-persistance = { module = "jakarta.persistence:jakarta.persistence-api", version.ref = "persistance" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
-liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase"}
+liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 
 [plugins]
