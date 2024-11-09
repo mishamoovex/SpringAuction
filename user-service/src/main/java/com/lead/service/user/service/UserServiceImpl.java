@@ -1,7 +1,7 @@
 package com.lead.service.user.service;
 
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.exception.NotFoundException;
+import com.lead.exceptions.NotFoundException;
 import com.lead.service.user.model.User;
 import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
