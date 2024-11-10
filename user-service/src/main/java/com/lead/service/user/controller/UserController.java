@@ -7,6 +7,7 @@ import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,17 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("v1/user")
 @AllArgsConstructor
 @Validated
+@RestController
+@RequestMapping("v1/user")
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> save(@Valid @RequestBody RegisterRequestDTO registerRequest) {
-        return null;
+    public ResponseEntity<User> save(
+            @Valid @RequestBody RegisterRequestDTO registerRequest
+    ) {
+        try {
+            User user = userService.save(registerRequest);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            throw new NotImplementedException();
+        }
     }
 
     @PutMapping("/{id}")
@@ -39,7 +47,7 @@ public class UserController {
             @Valid @RequestBody UpdateRequestDTO updateRequest,
             @PathVariable String id
     ) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @PutMapping("/{id}/email")
@@ -47,21 +55,21 @@ public class UserController {
             @RequestParam @Email(message = "Email is not valid") String email,
             @PathVariable String id
     ) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable String id) {
-        return null;
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping("/findAll")
     public ResponseEntity<List<User>> findAll() {
-        return null;
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
-        return null;
+        return ResponseEntity.noContent().build();
     }
 }
