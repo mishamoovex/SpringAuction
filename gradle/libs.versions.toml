@@ -4,6 +4,7 @@ spring = "3.3.5"
 postgresql = "42.5.0"
 liquibase = "4.30.0"
 hibernate = "6.6.2.Final"
+java-time = "2.18.1"
 
 [libraries]
 spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
@@ -15,6 +16,8 @@ hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate"
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+# user to support JavaTime API
+java-time = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "java-time" }
 
 [plugins]
 spring = { id = "org.springframework.boot", version.ref = "spring" }
