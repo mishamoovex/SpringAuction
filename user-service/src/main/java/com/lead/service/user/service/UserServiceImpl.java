@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String id) {
         User currentUser = findById(id);
-        userRepository.delete(currentUser);
+        userRepository.deleteById(currentUser.getId());
     }
 
     private User findById(String id) {
