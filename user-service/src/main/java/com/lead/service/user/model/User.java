@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "user")
+@Entity(name = "user_account")
 public class User extends BaseEntity {
     @Column(nullable = false, length = 30)
     private String firstName;
