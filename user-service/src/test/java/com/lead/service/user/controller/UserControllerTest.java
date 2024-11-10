@@ -2,9 +2,8 @@ package com.lead.service.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.repository.entity.UserEntity;
+import com.lead.service.user.controller.dto.UserDTO;
 import com.lead.service.user.service.UserService;
-import com.lead.service.util.UserUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,7 @@ class UserControllerTest {
             //Given
             RegisterRequestDTO request = new RegisterRequestDTO("Jon", "Smith", "email@gmail.com", "123456");
 
-            UserEntity expectedUser = UserUtil.createTestUser();
+            UserDTO expectedUser = new UserDTO("id","Jon", "Smith", "email@gmail.com");
             when(userService.save(any(RegisterRequestDTO.class))).thenReturn(expectedUser);
 
             //When
@@ -57,7 +56,7 @@ class UserControllerTest {
 
                     //Than
                     .andExpect(status().isOk())
-                    .andExpect(responseBody().containsObjectAsJson(expectedUser, UserEntity.class));
+                    .andExpect(responseBody().containsObjectAsJson(expectedUser, UserDTO.class));
         }
 
         @Test
