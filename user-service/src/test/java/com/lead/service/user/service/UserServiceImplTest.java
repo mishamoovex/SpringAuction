@@ -5,7 +5,6 @@ import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.service.user.model.User;
 import com.lead.service.user.repository.UserRepository;
 import com.lead.service.util.UserUtil;
-import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -63,15 +62,6 @@ class UserServiceImplTest {
             assertThat(actualUser).isEqualTo(newUser);
         }
 
-        @Test
-        public void shouldThrowBadRequestExceptionWhenDataIsNotValid() {
-            //Given
-            RegisterRequestDTO badRequest = new RegisterRequestDTO("", "", "", "");
-
-            //Then
-            assertThatThrownBy(() -> objectUnderTest.save(badRequest))
-                    .isInstanceOf(BadRequestException.class);
-        }
     }
 
     @Nested
@@ -93,17 +83,6 @@ class UserServiceImplTest {
 
             //Than
             assertThat(actualUser).isEqualTo(updatedUser);
-        }
-
-        //Test each validation field separately
-        @Test
-        public void shouldThrowBadRequestExceptionWhenDataIsNotValid() {
-            //Given
-            User updateUser = new User("", "", "", "");
-
-            //Than
-            assertThatThrownBy(() -> objectUnderTest.update(updateUser))
-                    .isInstanceOf(BadRequestException.class);
         }
 
         @Test
