@@ -1,10 +1,13 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.exceptions.NotFoundException;
-import com.lead.service.user.repository.entity.UserEntity;
+import com.lead.service.user.controller.dto.RegisterRequestDTO;
+import com.lead.service.user.controller.dto.UpdateRequestDTO;
+import com.lead.service.user.controller.dto.UserDTO;
 import com.lead.service.user.repository.UserRepository;
+import com.lead.service.user.repository.entity.UserEntity;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,34 +18,56 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private ModelMapper modelMapper;
 
     @Transactional
     @Override
-    public UserEntity save(RegisterRequestDTO request) {
+    public UserDTO save(RegisterRequestDTO request) {
         UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
-        return userRepository.save(entity);
+
+        UserEntity newUser = userRepository.save(entity);
+        return modelMapper.map(newUser, UserDTO.class);
     }
 
     @Transactional
     @Override
-    public UserEntity update(UserEntity user) {
-        UserEntity currentUser = findById(user.getId());
-        return userRepository.save(currentUser);
+    public UserDTO update(String id, UpdateRequestDTO request) {
+        UserEntity entity = findById(id).toBuilder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .build();
+
+        UserEntity updatedUser = userRepository.save(entity);
+        return modelMapper.map(updatedUser, UserDTO.class);
+    }
+
+    @Transactional
+    @Override
+    public UserDTO updateEmail(String id, String email) {
+        UserEntity entity = findById(id).toBuilder()
+                .email(email)
+                .build();
+
+        UserEntity updatedUser = userRepository.save(entity);
+        return modelMapper.map(updatedUser, UserDTO.class);
     }
 
     @Override
-    public UserEntity getById(String id) {
-        return findById(id);
+    public UserDTO getById(String id) {
+        return modelMapper.map(findById(id), UserDTO.class);
     }
 
     @Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
+    public List<UserDTO> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(entity -> modelMapper.map(entity, UserDTO.class))
+                .toList();
     }
 
     @Transactional

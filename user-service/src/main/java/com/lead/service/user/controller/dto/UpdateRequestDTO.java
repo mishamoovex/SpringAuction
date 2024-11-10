@@ -1,12 +1,10 @@
 package com.lead.service.user.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@AllArgsConstructor
-@Getter
-public class UpdateRequestDTO {
+@Data
+public final class UpdateRequestDTO {
     @NotBlank(message = "User first name is required")
     private String firstName;
     @NotBlank(message = "User last name is required")

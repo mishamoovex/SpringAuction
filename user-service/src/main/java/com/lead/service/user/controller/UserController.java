@@ -2,12 +2,11 @@ package com.lead.service.user.controller;
 
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.service.user.controller.dto.UpdateRequestDTO;
-import com.lead.service.user.repository.entity.UserEntity;
+import com.lead.service.user.controller.dto.UserDTO;
 import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,45 +30,39 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserEntity> save(
-            @Valid @RequestBody RegisterRequestDTO registerRequest
-    ) {
-        try {
-            UserEntity user = userService.save(registerRequest);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            throw new NotImplementedException();
-        }
+    public ResponseEntity<UserDTO> save(@Valid @RequestBody RegisterRequestDTO request) {
+        return ResponseEntity.ok(userService.save(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> update(
+    public ResponseEntity<UserDTO> update(
             @Valid @RequestBody UpdateRequestDTO updateRequest,
             @PathVariable String id
     ) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(userService.update(id, updateRequest));
     }
 
     @PutMapping("/{id}/email")
-    public ResponseEntity<UserEntity> updateEmail(
+    public ResponseEntity<UserDTO> updateEmail(
             @RequestParam @Email(message = "Email is not valid") String email,
             @PathVariable String id
     ) {
-        throw new NotImplementedException();
+        return ResponseEntity.ok(userService.updateEmail(email, id));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> findById(@PathVariable String id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<UserEntity>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
+        userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
