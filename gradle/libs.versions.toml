@@ -4,24 +4,17 @@ spring = "3.3.5"
 postgresql = "42.5.0"
 liquibase = "4.30.0"
 hibernate = "6.6.2.Final"
-junit = "5.9.0"
-mockito = "4.8.0"
-mockito-junit = "5.14.2"
-assertJ = "3.24.0"
 
 [libraries]
 spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
 spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring" }
+spring-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring" }
 hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
-test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
-test-mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
-test-mockito-junit = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
-text-assertions = { module = "org.assertj:assertj-core", version.ref = "assertJ" }
 
 [plugins]
 spring = { id = "org.springframework.boot", version.ref = "spring" }
@@ -35,9 +28,4 @@ data-service = [
     "postgresql",
     "liquibase"
 ]
-unit-testing = [
-    "test-junit",
-    "test-mockito",
-    "test-mockito-junit",
-    "text-assertions",
-]
+unit-testing = ["spring-test"]

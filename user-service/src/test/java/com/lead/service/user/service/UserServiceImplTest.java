@@ -5,14 +5,12 @@ import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.service.user.model.User;
 import com.lead.service.user.repository.UserRepository;
 import com.lead.service.util.UserUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -31,17 +29,8 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+    @InjectMocks
     private UserServiceImpl objectUnderTest;
-
-    @BeforeEach
-    public void setUp() {
-        objectUnderTest = new UserServiceImpl(userRepository);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        Mockito.reset(userRepository);
-    }
 
     @Nested
     @DisplayName("save a new user")
