@@ -13,6 +13,7 @@ assertJ = "3.24.0"
 spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
 spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
+spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring" }
 hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
@@ -30,6 +31,7 @@ data-service = [
     "spring-starter",
     "spring-web",
     "spring-jpa",
+    "spring-validation",
     "postgresql",
     "liquibase"
 ]
