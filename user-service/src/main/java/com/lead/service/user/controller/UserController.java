@@ -2,7 +2,7 @@ package com.lead.service.user.controller;
 
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.service.user.controller.dto.UpdateRequestDTO;
-import com.lead.service.user.model.User;
+import com.lead.service.user.repository.entity.UserEntity;
 import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -31,11 +31,11 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> save(
+    public ResponseEntity<UserEntity> save(
             @Valid @RequestBody RegisterRequestDTO registerRequest
     ) {
         try {
-            User user = userService.save(registerRequest);
+            UserEntity user = userService.save(registerRequest);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             throw new NotImplementedException();
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(
+    public ResponseEntity<UserEntity> update(
             @Valid @RequestBody UpdateRequestDTO updateRequest,
             @PathVariable String id
     ) {
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/email")
-    public ResponseEntity<User> updateEmail(
+    public ResponseEntity<UserEntity> updateEmail(
             @RequestParam @Email(message = "Email is not valid") String email,
             @PathVariable String id
     ) {
@@ -59,12 +59,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable String id) {
+    public ResponseEntity<UserEntity> findById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserEntity>> findAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 

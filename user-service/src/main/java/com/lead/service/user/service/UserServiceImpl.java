@@ -2,7 +2,7 @@ package com.lead.service.user.service;
 
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
 import com.lead.exceptions.NotFoundException;
-import com.lead.service.user.model.User;
+import com.lead.service.user.repository.entity.UserEntity;
 import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User save(RegisterRequestDTO request) {
-        User entity = User.builder()
+    public UserEntity save(RegisterRequestDTO request) {
+        UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -30,29 +30,29 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User update(User user) {
-        User currentUser = findById(user.getId());
+    public UserEntity update(UserEntity user) {
+        UserEntity currentUser = findById(user.getId());
         return userRepository.save(currentUser);
     }
 
     @Override
-    public User getById(String id) {
+    public UserEntity getById(String id) {
         return findById(id);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<UserEntity> getAll() {
         return userRepository.findAll();
     }
 
     @Transactional
     @Override
     public void delete(String id) {
-        User currentUser = findById(id);
+        UserEntity currentUser = findById(id);
         userRepository.deleteById(currentUser.getId());
     }
 
-    private User findById(String id) {
+    private UserEntity findById(String id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with id:" + id + " not found"));
     }

@@ -2,7 +2,7 @@ package com.lead.service.user.service;
 
 import com.lead.exceptions.NotFoundException;
 import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.model.User;
+import com.lead.service.user.repository.entity.UserEntity;
 import com.lead.service.user.repository.UserRepository;
 import com.lead.service.util.UserUtil;
 import org.junit.jupiter.api.DisplayName;
@@ -40,12 +40,12 @@ class UserServiceImplTest {
         public void shouldSaveWhenDataIsValid() {
             //Given
             RegisterRequestDTO registerRequest = new RegisterRequestDTO("Jon", "Smith", "email@gmail.com", "123456");
-            User newUser = createTestUser();
+            UserEntity newUser = createTestUser();
 
-            when(userRepository.save(any(User.class))).thenReturn(newUser);
+            when(userRepository.save(any(UserEntity.class))).thenReturn(newUser);
 
             //When
-            User actualUser = objectUnderTest.save(registerRequest);
+            UserEntity actualUser = objectUnderTest.save(registerRequest);
 
             //Than
             assertThat(actualUser).isEqualTo(newUser);
@@ -60,15 +60,15 @@ class UserServiceImplTest {
         @Test
         public void shouldUpdateUserWhenDataIsValid() {
             //Given
-            User existingUser = createTestUser();
-            User updateUser = createTestUser("NewLastName");
-            User updatedUser = UserUtil.createUpdatedTestUser("NewLastName");
+            UserEntity existingUser = createTestUser();
+            UserEntity updateUser = createTestUser("NewLastName");
+            UserEntity updatedUser = UserUtil.createUpdatedTestUser("NewLastName");
 
             when(userRepository.findById("id")).thenReturn(Optional.of(existingUser));
-            when(userRepository.save(any(User.class))).thenReturn(updatedUser);
+            when(userRepository.save(any(UserEntity.class))).thenReturn(updatedUser);
 
             //When
-            User actualUser = objectUnderTest.update(updateUser);
+            UserEntity actualUser = objectUnderTest.update(updateUser);
 
             //Than
             assertThat(actualUser).isEqualTo(updatedUser);
@@ -77,7 +77,7 @@ class UserServiceImplTest {
         @Test
         public void shouldThrowNotFoundExceptionWhenIsNotFound() {
             //Given
-            User updateUser = createTestUser();
+            UserEntity updateUser = createTestUser();
 
             //Than
             assertThatThrownBy(() -> objectUnderTest.update(updateUser))
@@ -92,7 +92,7 @@ class UserServiceImplTest {
         @Test
         public void shouldDeleteUserWhenExists() {
             //Given
-            User existingUser = createTestUser();
+            UserEntity existingUser = createTestUser();
 
             when(userRepository.findById("id")).thenReturn(Optional.of(existingUser));
 
@@ -121,12 +121,12 @@ class UserServiceImplTest {
         @Test
         public void shouldReturnUserWhenFound() {
             //Given
-            User existingUser = createTestUser();
+            UserEntity existingUser = createTestUser();
 
             when(userRepository.findById("id")).thenReturn(Optional.of(existingUser));
 
             //When
-            User actualUser = objectUnderTest.getById("id");
+            UserEntity actualUser = objectUnderTest.getById("id");
 
             //Than
             assertThat(actualUser).isEqualTo(existingUser);
@@ -151,11 +151,11 @@ class UserServiceImplTest {
         @Test
         public void shouldReturnUsersWhenFound() {
             //Given
-            List<User> existingUsers = UserUtil.createTestUsers(3);
+            List<UserEntity> existingUsers = UserUtil.createTestUsers(3);
             when(userRepository.findAll()).thenReturn(existingUsers);
 
             //When
-            List<User> actualUsers = objectUnderTest.getAll();
+            List<UserEntity> actualUsers = objectUnderTest.getAll();
 
             //Than
             assertThat(actualUsers).containsExactlyElementsOf(existingUsers);
@@ -167,7 +167,7 @@ class UserServiceImplTest {
             when(userRepository.findAll()).thenReturn(new ArrayList<>());
 
             //When
-            List<User> actualUsers = userRepository.findAll();
+            List<UserEntity> actualUsers = userRepository.findAll();
 
             //Than
             assertThat(actualUsers).isEmpty();

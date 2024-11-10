@@ -1,4 +1,4 @@
-package com.lead.service.user.model;
+package com.lead.service.user.repository.entity;
 
 import com.lead.model.BaseEntity;
 import jakarta.persistence.Column;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "user_account")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
     @Column(nullable = false, length = 30)
     private String firstName;
     @Column(nullable = false, length = 30)
