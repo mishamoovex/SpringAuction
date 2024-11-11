@@ -7,6 +7,8 @@ import com.lead.service.user.repository.entity.UserEntity;
 
 import java.util.List;
 
+//TODO Should I use nullable annotations to identify
+// that response in NOT NULL or NULLABLE
 public interface UserService {
     UserDTO save(RegisterRequestDTO request);
 
