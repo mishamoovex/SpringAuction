@@ -37,12 +37,18 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDTO update(String id, UpdateRequestDTO request) {
-        UserEntity entity = findById(id).toBuilder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .build();
+        UserEntity.UserEntityBuilder entity = findById(id).toBuilder();
 
-        UserEntity updatedUser = userRepository.save(entity);
+        //TODO What is the right way to validate fields to updated and service input fields in general???
+        if (request.getFirstName() != null) {
+            entity.firstName(request.getFirstName());
+        }
+
+        if (request.getLastName() != null) {
+            entity.lastName(request.getLastName());
+        }
+
+        UserEntity updatedUser = userRepository.save(entity.build());
         return modelMapper.map(updatedUser, UserDTO.class);
     }
 
@@ -73,6 +79,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(String id) {
+        //TODO Do I need to check if user exists here on OR in the Controller Authorization?
         UserEntity currentUser = findById(id);
         userRepository.deleteById(currentUser.getId());
     }
