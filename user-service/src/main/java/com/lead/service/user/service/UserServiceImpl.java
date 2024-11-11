@@ -37,18 +37,17 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDTO update(String id, UpdateRequestDTO request) {
-        UserEntity.UserEntityBuilder entity = findById(id).toBuilder();
+        UserEntity entity = findById(id);
 
         //TODO What is the right way to validate fields to updated and service input fields in general???
         if (request.getFirstName() != null) {
-            entity.firstName(request.getFirstName());
+            entity.setFirstName(request.getFirstName());
         }
-
         if (request.getLastName() != null) {
-            entity.lastName(request.getLastName());
+            entity.setLastName(request.getLastName());
         }
 
-        UserEntity updatedUser = userRepository.save(entity.build());
+        UserEntity updatedUser = userRepository.save(entity);
         return modelMapper.map(updatedUser, UserDTO.class);
     }
 
