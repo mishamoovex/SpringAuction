@@ -55,9 +55,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDTO updateEmail(String id, String email) {
-        UserEntity entity = findById(id).toBuilder()
-                .email(email)
-                .build();
+        UserEntity entity = findById(id);
+        entity.setEmail(email);
 
         UserEntity updatedUser = userRepository.save(entity);
         return modelMapper.map(updatedUser, UserDTO.class);
