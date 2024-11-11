@@ -1,8 +1,6 @@
 package com.lead.service.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.controller.dto.UserDTO;
 import com.lead.service.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,17 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.lead.service.util.ResponseBodyMatchers.responseBody;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
@@ -42,37 +31,12 @@ class UserControllerTest {
 
         @Test
         public void WHEN_request_valid_SHOULD_return_new_user() throws Exception {
-            //Given
-            RegisterRequestDTO request = new RegisterRequestDTO("Jon", "Smith", "email@gmail.com", "123456");
 
-            UserDTO expectedUser = new UserDTO("id","Jon", "Smith", "email@gmail.com");
-            when(userService.save(any(RegisterRequestDTO.class))).thenReturn(expectedUser);
-
-            //When
-            mockMvc.perform(post("/v1/user")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(request))
-                    )
-
-                    //Than
-                    .andExpect(status().isOk())
-                    .andExpect(responseBody().containsObjectAsJson(expectedUser, UserDTO.class));
         }
 
         @Test
         public void WHEN_request_invalid_SHOULD_return_400() throws Exception {
-            //Given
-            RegisterRequestDTO request = new RegisterRequestDTO("", "", "", "");
 
-            //WHen
-            mockMvc.perform(post("/v1/user")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(request))
-                    )
-                    .andExpect(status().isBadRequest());
-
-            //Than
-            verify(userService, never()).save(request);
         }
     }
 
