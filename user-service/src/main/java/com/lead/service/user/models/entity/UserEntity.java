@@ -1,4 +1,4 @@
-package com.lead.service.user.repository.entity;
+package com.lead.service.user.models.entity;
 
 import com.lead.model.BaseEntity;
 import jakarta.persistence.Column;

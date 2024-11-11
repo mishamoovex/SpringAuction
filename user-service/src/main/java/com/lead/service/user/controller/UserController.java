@@ -1,8 +1,8 @@
 package com.lead.service.user.controller;
 
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.controller.dto.UpdateRequestDTO;
-import com.lead.service.user.controller.dto.UserDTO;
+import com.lead.service.user.models.dto.RegisterRequestDTO;
+import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserDTO;
 import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;

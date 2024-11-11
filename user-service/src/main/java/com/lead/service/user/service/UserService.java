@@ -1,9 +1,8 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.controller.dto.UpdateRequestDTO;
-import com.lead.service.user.controller.dto.UserDTO;
-import com.lead.service.user.repository.entity.UserEntity;
+import com.lead.service.user.models.dto.RegisterRequestDTO;
+import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserDTO;
 
 import java.util.List;
 

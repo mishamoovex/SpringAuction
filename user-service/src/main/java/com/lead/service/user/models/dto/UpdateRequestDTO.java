@@ -1,4 +1,4 @@
-package com.lead.service.user.controller.dto;
+package com.lead.service.user.models.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -1,11 +1,11 @@
 package com.lead.service.user.service;
 
 import com.lead.exceptions.NotFoundException;
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.controller.dto.UpdateRequestDTO;
-import com.lead.service.user.controller.dto.UserDTO;
+import com.lead.service.user.models.dto.RegisterRequestDTO;
+import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserDTO;
 import com.lead.service.user.repository.UserRepository;
-import com.lead.service.user.repository.entity.UserEntity;
+import com.lead.service.user.models.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

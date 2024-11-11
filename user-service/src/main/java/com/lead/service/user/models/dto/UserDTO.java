@@ -1,4 +1,4 @@
-package com.lead.service.user.controller.dto;
+package com.lead.service.user.models.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
