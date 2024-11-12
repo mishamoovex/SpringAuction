@@ -1,4 +1,4 @@
-CREATE TABLE "user"
+CREATE TABLE "user_account"
 (
     id          VARCHAR(255)                NOT NULL,
     create_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
@@ -9,4 +9,3 @@ CREATE TABLE "user"
     password    VARCHAR(255)                NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id)
 );
-

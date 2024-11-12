@@ -1,10 +1,13 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.exceptions.NotFoundException;
-import com.lead.service.user.model.User;
+import com.lead.core.exception.NotFoundException;
+import com.lead.service.user.models.dto.RegisterRequestDTO;
+import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserDTO;
 import com.lead.service.user.repository.UserRepository;
+import com.lead.service.user.models.entity.UserEntity;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,44 +18,71 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private ModelMapper modelMapper;
 
     @Transactional
     @Override
-    public User save(RegisterRequestDTO request) {
-        User entity = User.builder()
+    public UserDTO save(RegisterRequestDTO request) {
+        UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
-        return userRepository.save(entity);
+
+        UserEntity newUser = userRepository.save(entity);
+        return modelMapper.map(newUser, UserDTO.class);
     }
 
     @Transactional
     @Override
-    public User update(User user) {
-        User currentUser = findById(user.getId());
-        return userRepository.save(currentUser);
+    public UserDTO update(String id, UpdateRequestDTO request) {
+        UserEntity entity = findById(id);
+
+        //TODO What is the right way to validate fields to updated and service input fields in general???
+        if (request.getFirstName() != null) {
+            entity.setFirstName(request.getFirstName());
+        }
+        if (request.getLastName() != null) {
+            entity.setLastName(request.getLastName());
+        }
+
+        UserEntity updatedUser = userRepository.save(entity);
+        return modelMapper.map(updatedUser, UserDTO.class);
+    }
+
+    @Transactional
+    @Override
+    public UserDTO updateEmail(String id, String email) {
+        UserEntity entity = findById(id);
+        entity.setEmail(email);
+
+        UserEntity updatedUser = userRepository.save(entity);
+        return modelMapper.map(updatedUser, UserDTO.class);
     }
 
     @Override
-    public User getById(String id) {
-        return findById(id);
+    public UserDTO getById(String id) {
+        return modelMapper.map(findById(id), UserDTO.class);
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDTO> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(entity -> modelMapper.map(entity, UserDTO.class))
+                .toList();
     }
 
     @Transactional
     @Override
     public void delete(String id) {
-        User currentUser = findById(id);
+        //TODO Do I need to check if user exists here on OR in the Controller Authorization?
+        UserEntity currentUser = findById(id);
         userRepository.deleteById(currentUser.getId());
     }
 
-    private User findById(String id) {
+    private UserEntity findById(String id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User with id:" + id + " not found"));
     }

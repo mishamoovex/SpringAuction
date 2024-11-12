@@ -11,4 +11,5 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     testImplementation(libs.bundles.unit.testing)
+    testImplementation(libs.java.time)
 }

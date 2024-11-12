@@ -1,18 +1,23 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.controller.dto.RegisterRequestDTO;
-import com.lead.service.user.model.User;
+import com.lead.service.user.models.dto.RegisterRequestDTO;
+import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserDTO;
 
 import java.util.List;
 
+//TODO Should I use nullable annotations to identify
+// that response in NOT NULL or NULLABLE
 public interface UserService {
-    User save(RegisterRequestDTO request);
+    UserDTO save(RegisterRequestDTO request);
 
-    User update(User user);
+    UserDTO update(String id, UpdateRequestDTO request);
 
-    User getById(String id);
+    UserDTO updateEmail(String id, String email);
 
-    List<User> getAll();
+    UserDTO getById(String id);
+
+    List<UserDTO> getAll();
 
     void delete(String id);
 }
