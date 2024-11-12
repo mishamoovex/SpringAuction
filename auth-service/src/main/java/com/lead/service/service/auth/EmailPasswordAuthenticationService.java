@@ -1,10 +1,10 @@
 package com.lead.service.service.auth;
 
 import com.lead.service.model.dto.TokenDto;
-import com.lead.service.model.dto.UserDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
+import com.lead.service.model.response.AuthResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 public class EmailPasswordAuthenticationService implements AuthenticationService {
 
     @Override
-    public UserDto login(LoginRequest loginRequest) {
+    public AuthResponse login(LoginRequest loginRequest) {
         return null;
     }
 
     @Override
-    public UserDto register(RegistrationRequest registrationRequest) {
+    public AuthResponse register(RegistrationRequest registrationRequest) {
         return null;
     }
 

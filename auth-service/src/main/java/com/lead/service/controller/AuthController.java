@@ -1,10 +1,10 @@
 package com.lead.service.controller;
 
 import com.lead.service.model.dto.TokenDto;
-import com.lead.service.model.dto.UserDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
+import com.lead.service.model.response.AuthResponse;
 import com.lead.service.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody @Valid RegistrationRequest request) {
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegistrationRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody @Valid LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 
