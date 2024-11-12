@@ -17,6 +17,8 @@ public interface UserService {
 
     UserDTO getById(String id);
 
+    UserDTO getByEmail(String email);
+
     List<UserDTO> getAll();
 
     void delete(String id);

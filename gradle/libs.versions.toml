@@ -38,7 +38,7 @@ spring-dependency = { id = "io.spring.dependency-management", version.ref = "spr
 data-service-core = [
     "spring-starter",
     "spring-web",
-#    "spring-security",
+    "spring-security",
     "spring-jpa",
     "spring-validation",
     "postgresql",
