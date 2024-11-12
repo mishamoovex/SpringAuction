@@ -1,4 +1,4 @@
-package com.lead.service.service;
+package com.lead.service.service.auth;
 
 import com.lead.service.model.dto.TokenDto;
 import com.lead.service.model.dto.UserDto;

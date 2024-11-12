@@ -5,7 +5,7 @@ import com.lead.service.model.dto.UserDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
-import com.lead.service.service.AuthenticationService;
+import com.lead.service.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
