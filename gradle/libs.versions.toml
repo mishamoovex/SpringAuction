@@ -2,6 +2,7 @@
 lombok = "1.18.34"
 spring = "3.3.5"
 spring-dependency = "1.1.6"
+spring-cloud-bom = "2023.0.3"
 postgresql = "42.5.0"
 liquibase = "4.30.0"
 hibernate = "6.6.2.Final"
@@ -18,6 +19,8 @@ spring-security = { module = "org.springframework.boot:spring-boot-starter-secur
 spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-test-security = { module = "org.springframework.security:spring-security-test" }
 spring-test-junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+spring-cloud-bom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud-bom" }
+spring-cloud-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign" }
 hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
@@ -45,6 +48,7 @@ data-service-core = [
 
 auth-service = [
     "spring-starter",
+    "spring-cloud-openfeign",
     "spring-web",
     "spring-security",
     "webtoken",
