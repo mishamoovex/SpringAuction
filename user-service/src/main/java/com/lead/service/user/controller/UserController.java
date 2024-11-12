@@ -44,7 +44,7 @@ public class UserController {
 
     @PutMapping("/{id}/email")
     public ResponseEntity<UserDTO> updateEmail(
-            @RequestParam @Email(message = "Email is not valid") String email,
+            @RequestParam @Email String email,
             @PathVariable String id
     ) {
         return ResponseEntity.ok(userService.updateEmail(id, email));

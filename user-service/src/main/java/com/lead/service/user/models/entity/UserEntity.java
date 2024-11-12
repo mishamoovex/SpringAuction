@@ -1,6 +1,6 @@
 package com.lead.service.user.models.entity;
 
-import com.lead.model.BaseEntity;
+import com.lead.core.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,8 @@ public class UserEntity extends BaseEntity {
     private String firstName;
     @Column(nullable = false, length = 30)
     private String lastName;
-    @Column(length = 40)
+    @Column(length = 50, nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(length = 50, nullable = false)
     private String password;
 }

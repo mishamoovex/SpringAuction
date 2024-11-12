@@ -1,6 +1,6 @@
 package com.lead.service.user.service;
 
-import com.lead.exceptions.NotFoundException;
+import com.lead.core.exception.NotFoundException;
 import com.lead.service.user.models.dto.RegisterRequestDTO;
 import com.lead.service.user.models.dto.UpdateRequestDTO;
 import com.lead.service.user.models.dto.UserDTO;

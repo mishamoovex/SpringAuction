@@ -1,4 +1,4 @@
-package com.lead.model;
+package com.lead.core.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
