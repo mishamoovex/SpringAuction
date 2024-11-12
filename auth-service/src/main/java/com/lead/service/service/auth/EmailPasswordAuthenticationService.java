@@ -7,6 +7,7 @@ import com.lead.service.model.request.TokenRequest;
 import com.lead.service.model.response.AuthResponse;
 import com.lead.service.web.UserServiceClient;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class EmailPasswordAuthenticationService implements AuthenticationService {
 
     private UserServiceClient userServiceClient;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
