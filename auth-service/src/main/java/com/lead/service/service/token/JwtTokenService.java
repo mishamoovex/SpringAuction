@@ -19,13 +19,29 @@ public class JwtTokenService implements TokenService {
     @Value("${jwt.expiration.access}")
     private Long accessExpiration;
 
-    private Clock clock;
+    @Value("${jwt.expiration.refresh}")
+    private Long refreshExpiration;
+
+    private final Clock clock;
+
+    public JwtTokenService(Clock clock) {
+        this.clock = clock;
+    }
 
     @Override
     public String generateAccessToken(String username) {
+        return generateToken(username, accessExpiration);
+    }
+
+    @Override
+    public String generateRefreshToken(String username) {
+        return generateToken(username, refreshExpiration);
+    }
+
+    private String generateToken(String username, Long expiration) {
         long timestamp = clock.millis();
         Date currentTimestamp = new Date(timestamp);
-        Date expirationDate = new Date(timestamp + accessExpiration);
+        Date expirationDate = new Date(timestamp + expiration);
 
         return Jwts.builder()
                 .subject(username)
