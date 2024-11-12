@@ -8,6 +8,7 @@ import com.lead.service.user.repository.UserRepository;
 import com.lead.service.user.models.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
         UserEntity newUser = userRepository.save(entity);
