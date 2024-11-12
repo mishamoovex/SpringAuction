@@ -6,4 +6,6 @@ plugins {
 
 dependencies {
     implementation(libs.bundles.auth.service)
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
