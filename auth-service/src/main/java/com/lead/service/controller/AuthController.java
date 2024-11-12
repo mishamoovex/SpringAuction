@@ -5,6 +5,7 @@ import com.lead.service.model.dto.UserDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
+import com.lead.service.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthenticationService authenticationService;
+
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody @Valid RegistrationRequest request) {
-        return null;
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody @Valid LoginRequest request) {
-        return null;
+        return ResponseEntity.ok(authenticationService.login(request));
     }
 
     @PostMapping("/token")
-    public ResponseEntity<TokenDto> token(@RequestBody @Valid TokenRequest request) {
-        return null;
+    public ResponseEntity<TokenDto> refreshToken(@RequestBody @Valid TokenRequest request) {
+        return ResponseEntity.ok(authenticationService.refreshToken(request));
     }
 }
