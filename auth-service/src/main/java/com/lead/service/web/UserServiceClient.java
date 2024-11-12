@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Validated
 public interface UserServiceClient {
 
-    @PostMapping("/save")
+    @PostMapping
     UserDto save(@RequestBody @Valid RegistrationRequest request);
 
     @GetMapping("/findByEmail/{email}")
