@@ -17,13 +17,11 @@ import lombok.Setter;
 @Setter
 public class RegistrationRequest {
     @NotBlank
-    @Max(value = 30, message = "Should be at most 30 characters long")
+    @Size(min = 2, max = 30, message = "Should be at most 30 characters long")
     private String firstName;
     @NotBlank
     private String lastName;
-    @Email()
-    @Pattern(regexp = GlobalConst.REGEX_EMAIL, message = "Email is not valid")
-    @Max(value = 50, message = "Should be at most 50 characters long")
+    @Email
     private String email;
     @Size(min = 6, max = 50, message = "Password must be at least 6 and at most 50 characters long")
     private String password;
