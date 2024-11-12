@@ -40,4 +40,12 @@ data-service-core = [
     "liquibase",
     "model-mapper"
 ]
+
+auth-service = [
+    "spring-starter",
+    "spring-web",
+    "spring-security",
+    "spring-validation"
+]
+
 unit-testing = ["spring-test", "spring-test-security", "java-time"]
