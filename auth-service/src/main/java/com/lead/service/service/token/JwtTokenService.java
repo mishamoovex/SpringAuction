@@ -1,5 +1,6 @@
 package com.lead.service.service.token;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.time.Clock;
 import java.util.Date;
+import java.util.function.Function;
 
 @Service
 public class JwtTokenService implements TokenService {
@@ -36,6 +38,32 @@ public class JwtTokenService implements TokenService {
     @Override
     public String generateRefreshToken(String username) {
         return generateToken(username, refreshExpiration);
+    }
+
+    @Override
+    public boolean isTokenExpired(String token) {
+        var currentTimestamp = new Date(clock.millis());
+        var tokenExpiration = extractExpiration(token);
+        return tokenExpiration.before(currentTimestamp);
+    }
+
+    @Override
+    public String extractUsername(String token) {
+        return getClaim(token, Claims::getSubject);
+    }
+
+    private Date extractExpiration(String token) {
+        return getClaim(token, Claims::getExpiration);
+    }
+
+    private <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        var claims = Jwts.parser()
+                .setSigningKey(createSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claimsResolver.apply(claims);
     }
 
     private String generateToken(String username, Long expiration) {

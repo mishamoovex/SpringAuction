@@ -1,10 +1,9 @@
 package com.lead.service.controller;
 
-import com.lead.service.model.dto.TokenDto;
+import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
-import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<TokenDto> refreshToken(@RequestBody @Valid TokenRequest request) {
+    public ResponseEntity<String> refreshToken(@RequestBody @Valid TokenRequest request) {
         return ResponseEntity.ok(authenticationService.refreshToken(request));
     }
 }

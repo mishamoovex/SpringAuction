@@ -49,6 +49,21 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
         throw new WrongCredentialsException("User with email " + loginRequest.getEmail() + " does not exist");
     }
 
+    @Override
+    public String refreshToken(TokenRequest tokenRequest) {
+        String username = tokenService.extractUsername(tokenRequest.getRefreshToken());
+        boolean isExpired = tokenService.isTokenExpired(tokenRequest.getRefreshToken());
+
+        if (username != null && !isExpired) {
+            var userDetails = userServiceClient.getByEmail(username);
+            if (userDetails != null) {
+                return tokenService.generateAccessToken(userDetails.getId());
+            }
+        }
+
+        throw new WrongCredentialsException("Invalid refresh token");
+    }
+
     private Authentication authenticate(String email, String password) {
         var authToken = new UsernamePasswordAuthenticationToken(email, password);
         return authenticationManager.authenticate(authToken);
@@ -58,10 +73,5 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
         var accessToken = tokenService.generateAccessToken(email);
         var refreshToken = tokenService.generateRefreshToken(email);
         return new TokenDto(accessToken, refreshToken);
-    }
-
-    @Override
-    public TokenDto refreshToken(TokenRequest tokenRequest) {
-        return null;
     }
 }
