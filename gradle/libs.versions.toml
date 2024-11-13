@@ -52,7 +52,8 @@ auth-service = [
     "spring-web",
     "spring-security",
     "webtoken",
-    "spring-validation"
+    "spring-validation",
+    "model-mapper"
 ]
 
 unit-testing = ["spring-test", "spring-test-security", "java-time"]
