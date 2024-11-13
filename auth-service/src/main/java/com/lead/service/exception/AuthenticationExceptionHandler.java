@@ -1,4 +1,4 @@
-package com.lead.service.model.exception;
+package com.lead.service.exception;
 
 import com.lead.core.exception.GeneralExceptionHandler;
 import org.springframework.http.HttpStatus;
