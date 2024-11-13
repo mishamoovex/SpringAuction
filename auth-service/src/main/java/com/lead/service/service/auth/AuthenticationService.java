@@ -4,12 +4,12 @@ import com.lead.service.model.dto.TokenDto;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
-import com.lead.service.model.response.AuthResponse;
+import com.lead.service.model.dto.AuthResponseDto;
 
 public interface AuthenticationService {
-    AuthResponse login(LoginRequest loginRequest);
+    AuthResponseDto login(LoginRequest loginRequest);
 
-    AuthResponse register(RegistrationRequest registrationRequest);
+    AuthResponseDto register(RegistrationRequest registrationRequest);
 
     TokenDto refreshToken(TokenRequest tokenRequest);
 }

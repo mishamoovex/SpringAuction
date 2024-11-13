@@ -1,7 +1,5 @@
-package com.lead.service.model.response;
+package com.lead.service.model.dto;
 
-import com.lead.service.model.dto.TokenDto;
-import com.lead.service.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class AuthResponse {
+public class AuthResponseDto {
     private UserDto user;
     private TokenDto token;
 }
