@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Data
 @Setter
-public class RegistrationRequest {
+public final class RegistrationRequest {
     @NotBlank
     @Size(min = 2, max = 30, message = "Should be at most 30 characters long")
     private String firstName;

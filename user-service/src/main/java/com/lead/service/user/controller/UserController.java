@@ -2,7 +2,7 @@ package com.lead.service.user.controller;
 
 import com.lead.service.user.models.request.RegisterRequest;
 import com.lead.service.user.models.request.UpdateRequest;
-import com.lead.service.user.models.dto.UserAccountDto;
+import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserAccountDto> save(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<UserDetailsDto> save(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.save(request));
     }
 
@@ -57,8 +57,8 @@ public class UserController {
     }
 
     @GetMapping("/account")
-    public ResponseEntity<UserAccountDto> findAccountByEmail(@RequestParam @Email String email) {
-        return ResponseEntity.ok(userService.getAccountByEmail(email));
+    public ResponseEntity<UserDetailsDto> findAccountByEmail(@RequestParam @Email String email) {
+        return ResponseEntity.ok(userService.getUserDetailsByEmail(email));
     }
 
     @GetMapping("/findAll")

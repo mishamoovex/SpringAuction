@@ -3,7 +3,7 @@ package com.lead.service.user.service;
 import com.lead.core.exception.NotFoundException;
 import com.lead.service.user.models.request.RegisterRequest;
 import com.lead.service.user.models.request.UpdateRequest;
-import com.lead.service.user.models.dto.UserAccountDto;
+import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.models.entity.UserEntity;
 import com.lead.service.user.repository.UserRepository;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserAccountDto save(RegisterRequest request) {
+    public UserDetailsDto save(RegisterRequest request) {
         UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         UserEntity newUser = userRepository.save(entity);
-        return modelMapper.map(newUser, UserAccountDto.class);
+        return modelMapper.map(newUser, UserDetailsDto.class);
     }
 
     @Transactional
@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateEmail(String id, String email) {
         UserEntity entity = findById(id);
+        //Should I validate an email here?
         entity.setEmail(email);
 
         UserEntity updatedUser = userRepository.save(entity);
@@ -70,11 +71,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserAccountDto getAccountByEmail(String email) {
+    public UserDetailsDto getUserDetailsByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
 
-        return modelMapper.map(user, UserAccountDto.class);
+        return modelMapper.map(user, UserDetailsDto.class);
     }
 
     @Override
