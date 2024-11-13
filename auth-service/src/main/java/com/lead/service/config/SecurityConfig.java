@@ -37,7 +37,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationManager(
+    public AuthenticationProvider authenticationProvider(
             RemoteUserDetailsService userDetailsService,
             PasswordEncoder passwordEncoder
     ) {

@@ -3,9 +3,10 @@ package com.lead.service.user.service;
 import com.lead.core.exception.NotFoundException;
 import com.lead.service.user.models.dto.RegisterRequestDTO;
 import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserAccountDto;
 import com.lead.service.user.models.dto.UserDTO;
-import com.lead.service.user.repository.UserRepository;
 import com.lead.service.user.models.entity.UserEntity;
+import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDTO save(RegisterRequestDTO request) {
+    public UserAccountDto save(RegisterRequestDTO request) {
         UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         UserEntity newUser = userRepository.save(entity);
-        return modelMapper.map(newUser, UserDTO.class);
+        return modelMapper.map(newUser, UserAccountDto.class);
     }
 
     @Transactional
@@ -69,11 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getByEmail(String email) {
+    public UserAccountDto getAccountByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(user, UserAccountDto.class);
     }
 
     @Override

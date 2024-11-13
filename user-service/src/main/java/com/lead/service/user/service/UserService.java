@@ -2,6 +2,7 @@ package com.lead.service.user.service;
 
 import com.lead.service.user.models.dto.RegisterRequestDTO;
 import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.dto.UserAccountDto;
 import com.lead.service.user.models.dto.UserDTO;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 //TODO Should I use nullable annotations to identify
 // that response in NOT NULL or NULLABLE
 public interface UserService {
-    UserDTO save(RegisterRequestDTO request);
+    UserAccountDto save(RegisterRequestDTO request);
 
     UserDTO update(String id, UpdateRequestDTO request);
 
@@ -17,7 +18,7 @@ public interface UserService {
 
     UserDTO getById(String id);
 
-    UserDTO getByEmail(String email);
+    UserAccountDto getAccountByEmail(String email);
 
     List<UserDTO> getAll();
 

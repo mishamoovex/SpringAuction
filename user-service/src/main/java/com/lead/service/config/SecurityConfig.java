@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.POST, "/v1/user").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v1/user/findByEmail/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/user/account").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
