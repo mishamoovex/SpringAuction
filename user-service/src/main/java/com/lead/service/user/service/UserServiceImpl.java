@@ -1,10 +1,10 @@
 package com.lead.service.user.service;
 
 import com.lead.core.exception.NotFoundException;
-import com.lead.service.user.models.dto.RegisterRequestDTO;
-import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.request.RegisterRequest;
+import com.lead.service.user.models.request.UpdateRequest;
 import com.lead.service.user.models.dto.UserAccountDto;
-import com.lead.service.user.models.dto.UserDTO;
+import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.models.entity.UserEntity;
 import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserAccountDto save(RegisterRequestDTO request) {
+    public UserAccountDto save(RegisterRequest request) {
         UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDTO update(String id, UpdateRequestDTO request) {
+    public UserDto update(String id, UpdateRequest request) {
         UserEntity entity = findById(id);
 
         //TODO What is the right way to validate fields to updated and service input fields in general???
@@ -51,22 +51,22 @@ public class UserServiceImpl implements UserService {
         }
 
         UserEntity updatedUser = userRepository.save(entity);
-        return modelMapper.map(updatedUser, UserDTO.class);
+        return modelMapper.map(updatedUser, UserDto.class);
     }
 
     @Transactional
     @Override
-    public UserDTO updateEmail(String id, String email) {
+    public UserDto updateEmail(String id, String email) {
         UserEntity entity = findById(id);
         entity.setEmail(email);
 
         UserEntity updatedUser = userRepository.save(entity);
-        return modelMapper.map(updatedUser, UserDTO.class);
+        return modelMapper.map(updatedUser, UserDto.class);
     }
 
     @Override
-    public UserDTO getById(String id) {
-        return modelMapper.map(findById(id), UserDTO.class);
+    public UserDto getById(String id) {
+        return modelMapper.map(findById(id), UserDto.class);
     }
 
     @Override
@@ -78,10 +78,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAll() {
+    public List<UserDto> getAll() {
         return userRepository.findAll()
                 .stream()
-                .map(entity -> modelMapper.map(entity, UserDTO.class))
+                .map(entity -> modelMapper.map(entity, UserDto.class))
                 .toList();
     }
 

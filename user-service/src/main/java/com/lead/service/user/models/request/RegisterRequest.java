@@ -1,4 +1,4 @@
-package com.lead.service.user.models.dto;
+package com.lead.service.user.models.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public final class RegisterRequestDTO {
+public final class RegisterRequest {
     @NotBlank
     private String firstName;
     @NotBlank(message = "User last name is required")

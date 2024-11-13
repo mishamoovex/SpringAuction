@@ -1,9 +1,9 @@
 package com.lead.service.user.controller;
 
-import com.lead.service.user.models.dto.RegisterRequestDTO;
-import com.lead.service.user.models.dto.UpdateRequestDTO;
+import com.lead.service.user.models.request.RegisterRequest;
+import com.lead.service.user.models.request.UpdateRequest;
 import com.lead.service.user.models.dto.UserAccountDto;
-import com.lead.service.user.models.dto.UserDTO;
+import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -31,20 +31,20 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserAccountDto> save(@Valid @RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<UserAccountDto> save(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(userService.save(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(
-            @Valid @RequestBody UpdateRequestDTO updateRequest,
+    public ResponseEntity<UserDto> update(
+            @Valid @RequestBody UpdateRequest updateRequest,
             @PathVariable String id
     ) {
         return ResponseEntity.ok(userService.update(id, updateRequest));
     }
 
     @PutMapping("/{id}/email")
-    public ResponseEntity<UserDTO> updateEmail(
+    public ResponseEntity<UserDto> updateEmail(
             @RequestParam @Email String email,
             @PathVariable String id
     ) {
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+    public ResponseEntity<UserDto> findById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getById(id));
     }
 
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<UserDTO>> findAll() {
+    public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok(userService.getAll());
     }
 
