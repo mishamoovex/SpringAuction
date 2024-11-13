@@ -7,7 +7,7 @@ import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
 import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.service.token.TokenService;
-import com.lead.service.web.UserServiceClient;
+import com.lead.service.service.user.UserServiceClient;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

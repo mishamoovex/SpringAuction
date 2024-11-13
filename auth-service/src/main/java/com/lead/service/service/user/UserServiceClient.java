@@ -1,4 +1,4 @@
-package com.lead.service.web;
+package com.lead.service.service.user;
 
 import com.lead.service.model.dto.UserDto;
 import com.lead.service.model.request.RegistrationRequest;
