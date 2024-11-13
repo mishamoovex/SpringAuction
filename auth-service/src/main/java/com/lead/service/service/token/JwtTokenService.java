@@ -1,5 +1,7 @@
 package com.lead.service.service.token;
 
+import com.lead.service.model.dto.AuthTokenDetails;
+import com.lead.service.model.dto.AuthTokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -12,10 +14,11 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.function.Function;
 
 @Service
 public class JwtTokenService implements TokenService {
+
+    private static final String CLAIM_KEY_TOKEN_TYPE = "token_type";
 
     @Value("${jwt.secret}")
     private String secret;
@@ -34,46 +37,44 @@ public class JwtTokenService implements TokenService {
 
     @Override
     public String generateAccessToken(String username) {
-        return generateToken(username, accessExpiration);
+        return generateToken(username, accessExpiration, AuthTokenType.ACCESS);
     }
 
     @Override
     public String generateRefreshToken(String username) {
-        return generateToken(username, refreshExpiration);
+        return generateToken(username, refreshExpiration, AuthTokenType.REFRESH);
     }
 
     @Override
-    public boolean isTokenExpired(String token) {
+    public AuthTokenDetails parse(String token) {
+        var claims = getClaims(token);
+        var userName = claims.getSubject();
+        var isTokenExpired = isTokenExpired(claims);
+        var tokenType = AuthTokenType.valueOf(claims.get(CLAIM_KEY_TOKEN_TYPE).toString());
+        return new AuthTokenDetails(userName, isTokenExpired, tokenType);
+    }
+
+    private boolean isTokenExpired(Claims claims) {
         var currentTimestamp = new Date(clock.millis());
-        var tokenExpiration = extractExpiration(token);
+        var tokenExpiration = claims.getExpiration();
         return tokenExpiration.before(currentTimestamp);
     }
 
-    @Override
-    public String extractUsername(String token) {
-        return getClaim(token, Claims::getSubject);
-    }
-
-    private Date extractExpiration(String token) {
-        return getClaim(token, Claims::getExpiration);
-    }
-
-    private <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
-        var claims = Jwts.parser()
+    private Claims getClaims(String token) {
+        return Jwts.parser()
                 .setSigningKey(createSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
-        return claimsResolver.apply(claims);
     }
 
-    private String generateToken(String username, Long expiration) {
+    private String generateToken(String username, Long expiration, AuthTokenType tokenType) {
         var timestamp = LocalDateTime.now(clock);
         var expirationDate = timestamp.plusSeconds(expiration);
 
         return Jwts.builder()
                 .subject(username)
+                .claim(CLAIM_KEY_TOKEN_TYPE, tokenType.name())
                 .issuedAt(toLegacyDate(timestamp))
                 .expiration(toLegacyDate(expirationDate))
                 .signWith(createSecretKey())

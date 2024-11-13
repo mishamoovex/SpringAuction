@@ -1,6 +1,7 @@
 package com.lead.service.service.auth;
 
 import com.lead.service.model.dto.AuthResponseDto;
+import com.lead.service.model.dto.AuthTokenType;
 import com.lead.service.model.dto.TokenDto;
 import com.lead.service.model.dto.UserDto;
 import com.lead.service.exception.WrongCredentialsException;
@@ -9,6 +10,7 @@ import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
 import com.lead.service.service.token.TokenService;
 import com.lead.service.web.UserServiceClient;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,17 +53,20 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
 
     @Override
     public String refreshToken(TokenRequest tokenRequest) {
-        String username = tokenService.extractUsername(tokenRequest.getRefreshToken());
-        boolean isExpired = tokenService.isTokenExpired(tokenRequest.getRefreshToken());
+        try {
+            var tokenDetails = tokenService.parse(tokenRequest.getRefreshToken());
+            var isTokenValid = !tokenDetails.getIsExpired()
+                    && tokenDetails.getUsername() != null
+                    && tokenDetails.getAuthTokenType() == AuthTokenType.REFRESH;
 
-        if (username != null && !isExpired) {
-            var userDetails = userServiceClient.getByEmail(username);
-            if (userDetails != null) {
-                return tokenService.generateAccessToken(userDetails.getId());
+            if (isTokenValid) {
+                var userDetails = userServiceClient.getByEmail(tokenDetails.getUsername());
+                if (userDetails != null) return tokenService.generateAccessToken(userDetails.getEmail());
             }
+            throw new WrongCredentialsException("Invalid refresh token");
+        } catch (ExpiredJwtException e) {
+            throw new WrongCredentialsException(e.getMessage());
         }
-
-        throw new WrongCredentialsException("Invalid refresh token");
     }
 
     private Authentication authenticate(String email, String password) {
