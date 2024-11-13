@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
+    implementation(platform(libs.spring.cloud.bom))
 
     implementation(libs.bundles.data.service.core)
     compileOnly(libs.lombok)

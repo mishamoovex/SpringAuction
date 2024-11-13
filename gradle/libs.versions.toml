@@ -39,6 +39,7 @@ data-service-core = [
     "spring-starter",
     "spring-web",
     "spring-security",
+    "spring-cloud-openfeign",
     "spring-jpa",
     "spring-validation",
     "postgresql",
