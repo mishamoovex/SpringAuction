@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class RemoteUserDetails implements UserDetails {
-    private final UserAccountDto user;
+    private final UserDetailsDto user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

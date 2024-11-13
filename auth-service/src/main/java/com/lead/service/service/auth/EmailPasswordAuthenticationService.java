@@ -25,14 +25,13 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
     private AuthenticationManager authenticationManager;
     private ModelMapper modelMapper;
 
-    //TODO do I need to call authenticate after registration???
     @Override
     public AuthResponseDto register(RegistrationRequest registrationRequest) {
-        var authUser = userServiceClient.save(registrationRequest);
+        var userDetails = userServiceClient.save(registrationRequest);
         var authState = authenticate(registrationRequest.getEmail(), registrationRequest.getPassword());
         if (authState.isAuthenticated()) {
             var token = getToken(registrationRequest.getEmail());
-            var user = modelMapper.map(authUser, UserDto.class);
+            var user = modelMapper.map(userDetails, UserDto.class);
             return new AuthResponseDto(user, token);
         }
         throw new WrongCredentialsException("Failed to authenticate newly registered user");
@@ -42,15 +41,14 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
     public AuthResponseDto login(LoginRequest loginRequest) {
         var authState = authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         if (authState.isAuthenticated()) {
-            var authUser = userServiceClient.getByEmail(loginRequest.getEmail());
-            var user = modelMapper.map(authUser, UserDto.class);
+            var userDetails = userServiceClient.getByEmail(loginRequest.getEmail());
+            var user = modelMapper.map(userDetails, UserDto.class);
             var token = getToken(loginRequest.getEmail());
             return new AuthResponseDto(user, token);
         }
         throw new WrongCredentialsException("User with email " + loginRequest.getEmail() + " does not exist");
     }
 
-    //TODO Do I need to use encoded password for comparison???
     private Authentication authenticate(String email, String password) {
         var authToken = new UsernamePasswordAuthenticationToken(email, password);
         return authenticationManager.authenticate(authToken);

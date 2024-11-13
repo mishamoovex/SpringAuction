@@ -1,6 +1,6 @@
 package com.lead.service.web;
 
-import com.lead.service.model.dto.UserAccountDto;
+import com.lead.service.model.dto.UserDetailsDto;
 import com.lead.service.model.request.RegistrationRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserServiceClient {
 
     @PostMapping
-    UserAccountDto save(@RequestBody RegistrationRequest request);
+    UserDetailsDto save(@RequestBody RegistrationRequest request);
 
     @GetMapping("/account")
-    UserAccountDto getByEmail(@RequestParam String email);
+    UserDetailsDto getByEmail(@RequestParam String email);
 }

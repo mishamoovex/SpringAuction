@@ -12,5 +12,5 @@ import lombok.Setter;
 @Setter
 public class TokenRequest {
     @NotBlank
-    private String password;
+    private String refreshToken;
 }
