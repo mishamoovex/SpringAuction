@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -67,16 +69,19 @@ public class JwtTokenService implements TokenService {
     }
 
     private String generateToken(String username, Long expiration) {
-        long timestamp = clock.millis();
-        Date currentTimestamp = new Date(timestamp);
-        Date expirationDate = new Date(timestamp + expiration);
+        var timestamp = LocalDateTime.now(clock);
+        var expirationDate = timestamp.plusSeconds(expiration);
 
         return Jwts.builder()
                 .subject(username)
-                .issuedAt(currentTimestamp)
-                .expiration(expirationDate)
+                .issuedAt(toLegacyDate(timestamp))
+                .expiration(toLegacyDate(expirationDate))
                 .signWith(createSecretKey())
                 .compact();
+    }
+
+    private Date toLegacyDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneOffset.UTC).toInstant());
     }
 
     private Key createSecretKey() {
