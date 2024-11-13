@@ -1,37 +1,60 @@
 [versions]
 lombok = "1.18.34"
 spring = "3.3.5"
+spring-dependency = "1.1.6"
+spring-cloud-bom = "2023.0.3"
 postgresql = "42.5.0"
 liquibase = "4.30.0"
 hibernate = "6.6.2.Final"
 java-time = "2.18.1"
 model-mapper = "3.2.1"
+webtoken = "0.12.6"
 
 [libraries]
-spring-starter = { module = "org.springframework.boot:spring-boot-starter", version.ref = "spring" }
-spring-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring" }
-spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring" }
-spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring" }
-spring-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring" }
+spring-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-test-security = { module = "org.springframework.security:spring-security-test" }
+spring-test-junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+spring-cloud-bom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud-bom" }
+spring-cloud-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign" }
 hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 model-mapper = { module = "org.modelmapper:modelmapper", version.ref = "model-mapper" }
+webtoken = { module = "io.jsonwebtoken:jjwt", version.ref = "webtoken" }
 # user to support JavaTime API
 java-time = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "java-time" }
 
 [plugins]
 spring = { id = "org.springframework.boot", version.ref = "spring" }
+spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
 
 [bundles]
-data-service = [
+data-service-core = [
     "spring-starter",
     "spring-web",
+    "spring-security",
+    "spring-cloud-openfeign",
     "spring-jpa",
     "spring-validation",
     "postgresql",
     "liquibase",
     "model-mapper"
 ]
-unit-testing = ["spring-test"]
+
+auth-service = [
+    "spring-starter",
+    "spring-cloud-openfeign",
+    "spring-web",
+    "spring-security",
+    "webtoken",
+    "spring-validation",
+    "model-mapper"
+]
+
+unit-testing = ["spring-test", "spring-test-security", "java-time"]

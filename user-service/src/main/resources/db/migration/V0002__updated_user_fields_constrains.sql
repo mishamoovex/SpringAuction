@@ -1,3 +1,8 @@
+-- liquibase formatted sql
+
+ALTER TABLE user_account
+    ADD CONSTRAINT uc_user_account_email UNIQUE (email);
+
 ALTER TABLE user_account
     ALTER COLUMN email TYPE VARCHAR(50) USING (email::VARCHAR(50));
 

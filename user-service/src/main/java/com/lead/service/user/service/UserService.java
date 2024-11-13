@@ -1,23 +1,26 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.models.dto.RegisterRequestDTO;
-import com.lead.service.user.models.dto.UpdateRequestDTO;
-import com.lead.service.user.models.dto.UserDTO;
+import com.lead.service.user.models.request.RegisterRequest;
+import com.lead.service.user.models.request.UpdateRequest;
+import com.lead.service.user.models.dto.UserDetailsDto;
+import com.lead.service.user.models.dto.UserDto;
 
 import java.util.List;
 
 //TODO Should I use nullable annotations to identify
 // that response in NOT NULL or NULLABLE
 public interface UserService {
-    UserDTO save(RegisterRequestDTO request);
+    UserDetailsDto save(RegisterRequest request);
 
-    UserDTO update(String id, UpdateRequestDTO request);
+    UserDto update(String id, UpdateRequest request);
 
-    UserDTO updateEmail(String id, String email);
+    UserDto updateEmail(String id, String email);
 
-    UserDTO getById(String id);
+    UserDto getById(String id);
 
-    List<UserDTO> getAll();
+    UserDetailsDto getUserDetailsByEmail(String email);
+
+    List<UserDto> getAll();
 
     void delete(String id);
 }
