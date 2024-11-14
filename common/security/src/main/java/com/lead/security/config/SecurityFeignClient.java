@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableFeignClients("com.lead.security")
-public class SecurityFeignClient {
+class SecurityFeignClient {
 }

@@ -8,5 +8,5 @@ import org.springframework.context.annotation.Configuration;
         "com.lead.security",
         "com.lead.common"
 })
-public class ProjectConfig {
+class ProjectConfig {
 }

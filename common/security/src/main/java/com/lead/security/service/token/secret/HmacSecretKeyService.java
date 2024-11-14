@@ -1,4 +1,4 @@
-package com.lead.security.service.secret;
+package com.lead.security.service.token.secret;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 
 @Service
-public class HmacSecretKeyService implements SecretKeyService {
+class HmacSecretKeyService implements SecretKeyService {
 
     @Value("${jwt.secret}")
     private String secret;

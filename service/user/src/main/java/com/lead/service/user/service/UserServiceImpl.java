@@ -1,6 +1,7 @@
 package com.lead.service.user.service;
 
 import com.lead.common.exception.NotFoundException;
+import com.lead.service.user.exception.AlreadyExistsException;
 import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.models.entity.UserEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private ModelMapper modelMapper;
@@ -26,6 +27,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDetailsDto save(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new AlreadyExistsException("User with email " + request + " already exists");
+        }
+
         UserEntity entity = UserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -56,6 +61,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDto updateEmail(String id, String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new AlreadyExistsException("User with email " + email + " already exists");
+        }
+
         UserEntity entity = findById(id);
         entity.setEmail(email);
 

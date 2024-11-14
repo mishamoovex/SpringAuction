@@ -1,4 +1,4 @@
-package com.lead.service.auth.model.dto;
+package com.lead.security.model;
 
 public enum AuthTokenType {
     ACCESS,
