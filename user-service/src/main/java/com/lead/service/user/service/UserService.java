@@ -1,14 +1,12 @@
 package com.lead.service.user.service;
 
-import com.lead.service.user.models.request.RegisterRequest;
-import com.lead.service.user.models.request.UpdateRequest;
 import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
+import com.lead.service.user.models.request.RegisterRequest;
+import com.lead.service.user.models.request.UpdateRequest;
 
 import java.util.List;
 
-//TODO Should I use nullable annotations to identify
-// that response in NOT NULL or NULLABLE
 public interface UserService {
     UserDetailsDto save(RegisterRequest request);
 
