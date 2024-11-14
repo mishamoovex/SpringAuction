@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ComponentScan("com.lead.core")
-public class CoreProjectConfig {
+public class CoreConfig {
 }
