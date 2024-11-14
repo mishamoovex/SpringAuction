@@ -30,13 +30,9 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
     @Override
     public AuthResponseDto register(RegistrationRequest registrationRequest) {
         var userDetails = userServiceClient.save(registrationRequest);
-        var authState = authenticate(registrationRequest.getEmail(), registrationRequest.getPassword());
-        if (authState.isAuthenticated()) {
-            var token = getToken(registrationRequest.getEmail());
-            var user = modelMapper.map(userDetails, UserDto.class);
-            return new AuthResponseDto(user, token);
-        }
-        throw new WrongCredentialsException("Failed to authenticate newly registered user");
+        var token = getToken(registrationRequest.getEmail());
+        var user = modelMapper.map(userDetails, UserDto.class);
+        return new AuthResponseDto(user, token);
     }
 
     @Override
