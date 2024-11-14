@@ -1,5 +1,6 @@
 package com.lead.service.service.auth;
 
+import com.lead.core.exception.NotFoundException;
 import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.model.dto.AuthTokenType;
 import com.lead.service.model.dto.TokenDto;
@@ -59,8 +60,9 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
                 var userDetails = userServiceClient.getByEmail(tokenDetails.getUsername());
                 if (userDetails != null) return tokenService.generateAccessToken(userDetails.getEmail());
             }
+
             throw new WrongCredentialsException("Invalid refresh token");
-        } catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException | NotFoundException e) {
             throw new WrongCredentialsException(e.getMessage());
         }
     }
