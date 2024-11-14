@@ -1,11 +1,11 @@
 package com.lead.service.user.service;
 
 import com.lead.core.exception.NotFoundException;
-import com.lead.service.user.models.request.RegisterRequest;
-import com.lead.service.user.models.request.UpdateRequest;
 import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.models.entity.UserEntity;
+import com.lead.service.user.models.request.RegisterRequest;
+import com.lead.service.user.models.request.UpdateRequest;
 import com.lead.service.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
     public UserDto update(String id, UpdateRequest request) {
         UserEntity entity = findById(id);
 
-        //TODO What is the right way to validate fields to updated and service input fields in general???
         if (request.getFirstName() != null) {
             entity.setFirstName(request.getFirstName());
         }
@@ -58,7 +57,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateEmail(String id, String email) {
         UserEntity entity = findById(id);
-        //Should I validate an email here?
         entity.setEmail(email);
 
         UserEntity updatedUser = userRepository.save(entity);
@@ -67,7 +65,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getById(String id) {
-        return modelMapper.map(findById(id), UserDto.class);
+        UserEntity user = findById(id);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -89,9 +88,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(String id) {
-        //TODO Do I need to check if user exists here on OR in the Controller Authorization?
-        UserEntity currentUser = findById(id);
-        userRepository.deleteById(currentUser.getId());
+        userRepository.deleteById(id);
     }
 
     private UserEntity findById(String id) {
