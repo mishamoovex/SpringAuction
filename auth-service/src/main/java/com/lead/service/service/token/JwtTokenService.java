@@ -1,15 +1,13 @@
 package com.lead.service.service.token;
 
+import com.lead.core.service.secret.SecretKeyService;
 import com.lead.service.model.dto.AuthTokenDetails;
 import com.lead.service.model.dto.AuthTokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -20,9 +18,6 @@ public class JwtTokenService implements TokenService {
 
     private static final String CLAIM_KEY_TOKEN_TYPE = "token_type";
 
-    @Value("${jwt.secret}")
-    private String secret;
-
     @Value("${jwt.expiration.access}")
     private Long accessExpiration;
 
@@ -30,9 +25,11 @@ public class JwtTokenService implements TokenService {
     private Long refreshExpiration;
 
     private final Clock clock;
+    private final SecretKeyService secretKeyService;
 
-    public JwtTokenService(Clock clock) {
+    public JwtTokenService(Clock clock, SecretKeyService secretKeyService) {
         this.clock = clock;
+        this.secretKeyService = secretKeyService;
     }
 
     @Override
@@ -62,7 +59,7 @@ public class JwtTokenService implements TokenService {
 
     private Claims getClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(createSecretKey())
+                .setSigningKey(secretKeyService.getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -77,16 +74,11 @@ public class JwtTokenService implements TokenService {
                 .claim(CLAIM_KEY_TOKEN_TYPE, tokenType.name())
                 .issuedAt(toLegacyDate(timestamp))
                 .expiration(toLegacyDate(expirationDate))
-                .signWith(createSecretKey())
+                .signWith(secretKeyService.getSecretKey())
                 .compact();
     }
 
     private Date toLegacyDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneOffset.UTC).toInstant());
-    }
-
-    private Key createSecretKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
     }
 }
