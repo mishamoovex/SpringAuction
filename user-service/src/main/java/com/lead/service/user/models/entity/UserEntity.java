@@ -1,6 +1,6 @@
 package com.lead.service.user.models.entity;
 
-import com.lead.core.model.BaseEntity;
+import com.lead.common.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;

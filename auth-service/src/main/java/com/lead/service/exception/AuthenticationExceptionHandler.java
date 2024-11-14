@@ -1,6 +1,6 @@
 package com.lead.service.exception;
 
-import com.lead.core.exception.GeneralExceptionHandler;
+import com.lead.common.exception.GeneralExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

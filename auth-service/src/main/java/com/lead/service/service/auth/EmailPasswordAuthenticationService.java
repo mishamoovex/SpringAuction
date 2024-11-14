@@ -1,7 +1,7 @@
 package com.lead.service.service.auth;
 
-import com.lead.common.security.web.UserDetailsClient;
-import com.lead.core.exception.NotFoundException;
+import com.lead.common.exception.NotFoundException;
+import com.lead.security.web.UserDetailsClient;
 import com.lead.service.exception.WrongCredentialsException;
 import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.model.dto.AuthTokenType;

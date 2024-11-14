@@ -1,9 +1,12 @@
 package com.lead.service.config;
 
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
-@ComponentScan({"com.lead.core", "com.lead.common.security"})
+@Configuration
+@ComponentScan({
+        "com.lead.security",
+        "com.lead.common"
+})
 public class ProjectConfig {
 }

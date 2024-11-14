@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation(project(":common:service"))
     implementation(project(":common:security"))
 
     implementation(platform(libs.spring.cloud.bom))
