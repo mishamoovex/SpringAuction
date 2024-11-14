@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+
+jwt:
+  expiration:
+    access: 86400
+    refresh: 604800
