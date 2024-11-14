@@ -1,11 +1,12 @@
 package com.lead.service.service.auth;
 
 import com.lead.core.exception.NotFoundException;
+import com.lead.core.service.user.UserDetailsClient;
+import com.lead.service.exception.WrongCredentialsException;
 import com.lead.service.model.dto.AuthResponseDto;
 import com.lead.service.model.dto.AuthTokenType;
 import com.lead.service.model.dto.TokenDto;
 import com.lead.service.model.dto.UserDto;
-import com.lead.service.exception.WrongCredentialsException;
 import com.lead.service.model.request.LoginRequest;
 import com.lead.service.model.request.RegistrationRequest;
 import com.lead.service.model.request.TokenRequest;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class EmailPasswordAuthenticationService implements AuthenticationService {
 
     private UserServiceClient userServiceClient;
+    private UserDetailsClient userDetailsClient;
     private TokenService tokenService;
     private AuthenticationManager authenticationManager;
     private ModelMapper modelMapper;
@@ -40,7 +42,7 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
     public AuthResponseDto login(LoginRequest loginRequest) {
         var authState = authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         if (authState.isAuthenticated()) {
-            var userDetails = userServiceClient.getByEmail(loginRequest.getEmail());
+            var userDetails = userDetailsClient.getByEmail(loginRequest.getEmail());
             var user = modelMapper.map(userDetails, UserDto.class);
             var token = getToken(loginRequest.getEmail());
             return new AuthResponseDto(user, token);
@@ -57,7 +59,7 @@ public class EmailPasswordAuthenticationService implements AuthenticationService
                     && tokenDetails.getAuthTokenType() == AuthTokenType.REFRESH;
 
             if (isTokenValid) {
-                var userDetails = userServiceClient.getByEmail(tokenDetails.getUsername());
+                var userDetails = userDetailsClient.getByEmail(tokenDetails.getUsername());
                 if (userDetails != null) return tokenService.generateAccessToken(userDetails.getEmail());
             }
 

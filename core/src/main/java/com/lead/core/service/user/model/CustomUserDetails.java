@@ -1,4 +1,4 @@
-package com.lead.service.model.dto;
+package com.lead.core.service.user.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class RemoteUserDetails implements UserDetails {
+public final class CustomUserDetails implements UserDetails {
     private final UserDetailsDto user;
 
     @Override

@@ -1,6 +1,6 @@
 package com.lead.service.config;
 
-import com.lead.service.service.user.RemoteUserDetailsService;
+import com.lead.core.service.user.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,12 +37,12 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider(
-            RemoteUserDetailsService userDetailsService,
+            CustomUserDetailsService customUserDetailsService,
             PasswordEncoder passwordEncoder
     ) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(passwordEncoder);
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(customUserDetailsService);
         return authProvider;
     }
 }

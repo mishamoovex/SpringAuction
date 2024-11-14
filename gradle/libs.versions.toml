@@ -35,26 +35,19 @@ spring = { id = "org.springframework.boot", version.ref = "spring" }
 spring-dependency = { id = "io.spring.dependency-management", version.ref = "spring-dependency" }
 
 [bundles]
-data-service-core = [
+service-core = [
     "spring-starter",
     "spring-web",
     "spring-security",
     "spring-cloud-openfeign",
-    "spring-jpa",
     "spring-validation",
-    "postgresql",
-    "liquibase",
     "model-mapper"
 ]
 
-auth-service = [
-    "spring-starter",
-    "spring-cloud-openfeign",
-    "spring-web",
-    "spring-security",
-    "webtoken",
-    "spring-validation",
-    "model-mapper"
+service-data = [
+    "spring-jpa",
+    "postgresql",
+    "liquibase",
 ]
 
 unit-testing = ["spring-test", "spring-test-security", "java-time"]

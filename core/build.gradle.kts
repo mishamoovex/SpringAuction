@@ -5,12 +5,10 @@ plugins {
 }
 
 dependencies {
+    implementation(platform(libs.spring.cloud.bom))
+    implementation(libs.bundles.service.core)
     implementation(libs.hibernate)
-    implementation(libs.spring.web)
-    implementation(libs.spring.validation)
-    implementation(libs.spring.security)
     implementation(libs.webtoken)
-    implementation(libs.model.mapper)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 }

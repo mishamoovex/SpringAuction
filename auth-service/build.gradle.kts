@@ -6,9 +6,10 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
-    implementation(platform(libs.spring.cloud.bom))
 
-    implementation(libs.bundles.auth.service)
+    implementation(platform(libs.spring.cloud.bom))
+    implementation(libs.bundles.service.core)
+    implementation(libs.webtoken)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 }
