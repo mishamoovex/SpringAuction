@@ -63,12 +63,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(updatedUser, UserDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDto getById(String id) {
         UserEntity user = findById(id);
         return modelMapper.map(user, UserDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetailsDto getUserDetailsByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email)
@@ -77,6 +79,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDetailsDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<UserDto> getAll() {
         return userRepository.findAll()
