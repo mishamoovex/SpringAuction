@@ -1,4 +1,4 @@
-package com.lead.core.service.user.model;
+package com.lead.common.security.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 @RequiredArgsConstructor
-public final class CustomUserDetails implements UserDetails {
-    private final UserDetailsDto user;
+public final class AuthUserDetails implements UserDetails {
+    private final AuthUserDetailsDto user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

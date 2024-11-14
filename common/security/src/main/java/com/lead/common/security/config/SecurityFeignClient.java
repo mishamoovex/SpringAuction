@@ -1,9 +1,9 @@
-package com.lead.core.config;
+package com.lead.common.security.config;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableFeignClients("com.lead.core.service.user")
-public class FeignClient {
+@EnableFeignClients("com.lead.common.security.web")
+public class SecurityFeignClient {
 }

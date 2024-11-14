@@ -1,4 +1,4 @@
-package com.lead.core.service.secret;
+package com.lead.common.security.service.secret;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

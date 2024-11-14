@@ -1,4 +1,4 @@
-package com.lead.core.config;
+package com.lead.common.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @PropertySource("classpath:security-config.properties")
-public class CoreSecurityConfig {
+public class CommonSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

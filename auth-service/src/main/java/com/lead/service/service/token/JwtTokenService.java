@@ -1,6 +1,6 @@
 package com.lead.service.service.token;
 
-import com.lead.core.service.secret.SecretKeyService;
+import com.lead.common.security.service.secret.SecretKeyService;
 import com.lead.service.model.dto.AuthTokenDetails;
 import com.lead.service.model.dto.AuthTokenType;
 import io.jsonwebtoken.Claims;

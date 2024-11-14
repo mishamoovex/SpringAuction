@@ -1,4 +1,4 @@
-package com.lead.core.service.secret;
+package com.lead.common.security.service.secret;
 
 import java.security.Key;
 

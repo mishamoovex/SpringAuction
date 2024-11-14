@@ -1,6 +1,6 @@
 package com.lead.service.config;
 
-import com.lead.core.service.user.CustomUserDetailsService;
+import com.lead.common.security.service.user.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
