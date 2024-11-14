@@ -17,7 +17,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private ModelMapper modelMapper;

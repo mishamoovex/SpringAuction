@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @PropertySource("classpath:security-config.properties")
-public class CommonSecurityConfig {
+class CommonSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

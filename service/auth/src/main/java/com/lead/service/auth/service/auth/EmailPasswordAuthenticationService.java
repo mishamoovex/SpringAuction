@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class EmailPasswordAuthenticationService implements AuthenticationService {
+class EmailPasswordAuthenticationService implements AuthenticationService {
 
     private UserServiceClient userServiceClient;
     private UserDetailsClient userDetailsClient;

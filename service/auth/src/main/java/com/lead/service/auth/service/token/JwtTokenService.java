@@ -14,7 +14,7 @@ import java.time.ZoneOffset;
 import java.util.Date;
 
 @Service
-public class JwtTokenService implements TokenService {
+class JwtTokenService implements TokenService {
 
     private static final String CLAIM_KEY_TOKEN_TYPE = "token_type";
 

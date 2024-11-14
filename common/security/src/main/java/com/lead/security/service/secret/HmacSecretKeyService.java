@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 
 @Service
-public class HmacSecretKeyService implements SecretKeyService {
+class HmacSecretKeyService implements SecretKeyService {
 
     @Value("${jwt.secret}")
     private String secret;
