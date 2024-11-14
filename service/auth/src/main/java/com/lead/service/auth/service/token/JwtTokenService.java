@@ -1,9 +1,7 @@
 package com.lead.service.auth.service.token;
 
-import com.lead.security.service.secret.SecretKeyService;
-import com.lead.service.auth.model.dto.AuthTokenDetails;
-import com.lead.service.auth.model.dto.AuthTokenType;
-import io.jsonwebtoken.Claims;
+import com.lead.security.model.AuthTokenType;
+import com.lead.security.service.token.secret.SecretKeyService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,29 +38,6 @@ class JwtTokenService implements TokenService {
     @Override
     public String generateRefreshToken(String username) {
         return generateToken(username, refreshExpiration, AuthTokenType.REFRESH);
-    }
-
-    @Override
-    public AuthTokenDetails parse(String token) {
-        var claims = getClaims(token);
-        var userName = claims.getSubject();
-        var isTokenExpired = isTokenExpired(claims);
-        var tokenType = AuthTokenType.valueOf(claims.get(CLAIM_KEY_TOKEN_TYPE).toString());
-        return new AuthTokenDetails(userName, isTokenExpired, tokenType);
-    }
-
-    private boolean isTokenExpired(Claims claims) {
-        var currentTimestamp = new Date(clock.millis());
-        var tokenExpiration = claims.getExpiration();
-        return tokenExpiration.before(currentTimestamp);
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKeyService.getSecretKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
     }
 
     private String generateToken(String username, Long expiration, AuthTokenType tokenType) {

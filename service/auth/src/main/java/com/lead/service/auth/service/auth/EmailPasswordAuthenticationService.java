@@ -1,10 +1,11 @@
 package com.lead.service.auth.service.auth;
 
 import com.lead.common.exception.NotFoundException;
+import com.lead.security.model.AuthTokenType;
+import com.lead.security.service.token.parser.TokenParser;
 import com.lead.security.web.UserDetailsClient;
 import com.lead.service.auth.exception.WrongCredentialsException;
 import com.lead.service.auth.model.dto.AuthResponseDto;
-import com.lead.service.auth.model.dto.AuthTokenType;
 import com.lead.service.auth.model.dto.TokenDto;
 import com.lead.service.auth.model.dto.UserDto;
 import com.lead.service.auth.model.request.LoginRequest;
@@ -27,6 +28,7 @@ class EmailPasswordAuthenticationService implements AuthenticationService {
     private UserServiceClient userServiceClient;
     private UserDetailsClient userDetailsClient;
     private TokenService tokenService;
+    private TokenParser tokenParser;
     private AuthenticationManager authenticationManager;
     private ModelMapper modelMapper;
 
@@ -53,7 +55,7 @@ class EmailPasswordAuthenticationService implements AuthenticationService {
     @Override
     public String refreshToken(TokenRequest tokenRequest) {
         try {
-            var tokenDetails = tokenService.parse(tokenRequest.getRefreshToken());
+            var tokenDetails = tokenParser.parse(tokenRequest.getRefreshToken());
             var isTokenValid = !tokenDetails.getIsExpired()
                     && tokenDetails.getUsername() != null
                     && tokenDetails.getAuthTokenType() == AuthTokenType.REFRESH;
