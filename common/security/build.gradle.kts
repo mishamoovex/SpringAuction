@@ -6,8 +6,7 @@ plugins {
 
 dependencies {
     implementation(platform(libs.spring.cloud.bom))
-    implementation(libs.bundles.service.core)
-    implementation(libs.webtoken)
+    implementation(libs.bundles.common.security)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 }

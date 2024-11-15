@@ -52,4 +52,14 @@ service-data = [
     "liquibase",
 ]
 
+common-security = [
+    "spring-starter",
+    "spring-web",
+    "spring-security",
+    "spring-cloud-openfeign",
+    "spring-validation",
+    "model-mapper",
+    "webtoken"
+]
+
 unit-testing = ["spring-test", "spring-test-security", "java-time"]
