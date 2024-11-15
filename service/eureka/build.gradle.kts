@@ -6,7 +6,5 @@ plugins {
 
 dependencies {
     implementation(platform(libs.spring.cloud.bom))
-    implementation(libs.bundles.common.security)
-    compileOnly(libs.lombok)
-    annotationProcessor(libs.lombok)
+    implementation(libs.spring.cloud.eureka.server)
 }

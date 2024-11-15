@@ -16,11 +16,13 @@ spring-web = { module = "org.springframework.boot:spring-boot-starter-web" }
 spring-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-cloud-bom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud-bom" }
+spring-cloud-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign" }
+spring-cloud-eureka-server = { module = "org.springframework.cloud:spring-cloud-starter-netflix-eureka-server" }
+spring-cloud-eureka-client = { module = "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client" }
 spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-test-security = { module = "org.springframework.security:spring-security-test" }
 spring-test-junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
-spring-cloud-bom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud-bom" }
-spring-cloud-openfeign = { module = "org.springframework.cloud:spring-cloud-starter-openfeign" }
 hibernate = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 liquibase = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
@@ -40,6 +42,7 @@ service-core = [
     "spring-web",
     "spring-security",
     "spring-cloud-openfeign",
+    "spring-cloud-eureka-client",
     "spring-validation",
     "model-mapper"
 ]
@@ -48,6 +51,16 @@ service-data = [
     "spring-jpa",
     "postgresql",
     "liquibase",
+]
+
+common-security = [
+    "spring-starter",
+    "spring-web",
+    "spring-security",
+    "spring-cloud-openfeign",
+    "spring-validation",
+    "model-mapper",
+    "webtoken"
 ]
 
 unit-testing = ["spring-test", "spring-test-security", "java-time"]
