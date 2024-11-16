@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("principal.id == #id")
     public ResponseEntity<UserDto> update(
             @Valid @RequestBody UpdateRequest updateRequest,
             @PathVariable String id
@@ -44,6 +46,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/email")
+    @PreAuthorize("principal.id == #id")
     public ResponseEntity<UserDto> updateEmail(
             @RequestParam @Email String email,
             @PathVariable String id
@@ -67,6 +70,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("principal.id == #id")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
