@@ -1,4 +1,5 @@
 rootProject.name = "SpringAuction"
+include(":gateway")
 include(":common:service")
 include(":common:security")
 include(":service:eureka")
