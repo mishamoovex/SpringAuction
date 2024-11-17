@@ -5,5 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="db/migration/V0001_create_auction_table.sql"/>
+    <include file="/db/migration/V0001__create_auction_table.sql"/>
+    <include file="db/migration/V0002__create_admin_table.sql"/>
 </databaseChangeLog>
