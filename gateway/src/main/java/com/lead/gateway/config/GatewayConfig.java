@@ -18,6 +18,7 @@ public class GatewayConfig {
         return builder.routes()
                 .route("auth-service", eurekaRoute("/v1/auth/**", "auth-service"))
                 .route("user-service", eurekaRoute("/v1/user/**", "user-service"))
+                .route("auction-service", eurekaRoute("/v1/auction/**", "auction-service"))
                 .build();
     }
 
