@@ -3,7 +3,7 @@ package com.lead.service.auction.controller;
 import com.lead.security.model.AuthUserDetails;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
-import com.lead.service.auction.service.AuctionService;
+import com.lead.service.auction.service.auction.AuctionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
