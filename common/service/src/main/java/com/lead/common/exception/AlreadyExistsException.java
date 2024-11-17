@@ -1,4 +1,4 @@
-package com.lead.service.user.exception;
+package com.lead.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
