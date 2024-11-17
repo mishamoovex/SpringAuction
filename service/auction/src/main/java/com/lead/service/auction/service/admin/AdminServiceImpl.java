@@ -46,6 +46,12 @@ public class AdminServiceImpl implements AdminService {
         auctionRepository.save(auction);
     }
 
+    @Override
+    public boolean isAdmin(String auctionId, String adminId) {
+        AuctionEntity auction = findById(auctionId);
+        return auction.getOwnerId().equals(adminId) || auction.getAdministrators().contains(adminId);
+    }
+
     private AuctionEntity findById(String auctionId) {
         return auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new NotFoundException("Auction with id: " + auctionId + " not found"));
