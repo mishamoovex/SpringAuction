@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Clock;
 import java.time.LocalDateTime;
 
-@Service
+@Service("auctionService")
 @AllArgsConstructor
 public class AuctionServiceImpl implements AuctionService {
 
