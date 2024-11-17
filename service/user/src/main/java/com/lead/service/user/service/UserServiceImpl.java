@@ -1,7 +1,7 @@
 package com.lead.service.user.service;
 
+import com.lead.common.exception.AlreadyExistsException;
 import com.lead.common.exception.NotFoundException;
-import com.lead.service.user.exception.AlreadyExistsException;
 import com.lead.service.user.models.dto.UserDetailsDto;
 import com.lead.service.user.models.dto.UserDto;
 import com.lead.service.user.models.entity.UserEntity;
