@@ -29,6 +29,7 @@ public class AuctionServiceImpl implements AuctionService {
 
         AuctionEntity entity = AuctionEntity.builder()
                 .ownerId(ownerId)
+                .name(createAuctionRequest.getName())
                 .startTime(createAuctionRequest.getStartTime())
                 .endTime(createAuctionRequest.getEndTime())
                 .status(AuctionStatus.PENDING)
