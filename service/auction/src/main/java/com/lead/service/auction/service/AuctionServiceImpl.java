@@ -42,6 +42,10 @@ public class AuctionServiceImpl implements AuctionService {
     private void validateDateRange(LocalDateTime start, LocalDateTime end) {
         var now = LocalDateTime.now(clock);
         var isValid = start.isAfter(now) && start.isBefore(end);
-        if (!isValid) throw new InvalidDateRangeException("Invalid auction date range");
+        if (!isValid) {
+            throw new InvalidDateRangeException(
+                    "Invalid auction date range startDate: " + start + ", endDate: " + end
+            );
+        }
     }
 }
