@@ -1,6 +1,7 @@
 package com.lead.service.auction.controller;
 
 import com.lead.security.model.AuthUserDetails;
+import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
 import com.lead.service.auction.models.request.UpdateAuctionRequest;
@@ -43,6 +44,14 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.update(request));
     }
 
+    @PutMapping("{auctionId}/status")
+    @PreAuthorize("@adminService.isAdmin(#auctionId, authentication.principal.id)")
+    public ResponseEntity<AuctionDto> updateStatus(
+            @PathVariable String auctionId,
+            @RequestParam AuctionStatus newStatus
+    ) {
+        return ResponseEntity.ok(auctionService.updateStatus(auctionId, newStatus));
+    }
 
     @GetMapping("{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
