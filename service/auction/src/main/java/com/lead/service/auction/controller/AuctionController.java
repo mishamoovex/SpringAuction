@@ -63,4 +63,11 @@ public class AuctionController {
         adminService.removeAdmin(auctionId, adminId);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("{auctionId}")
+    @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
+    public ResponseEntity<Void> delete(@PathVariable String auctionId) {
+        auctionService.delete(auctionId);
+        return ResponseEntity.noContent().build();
+    }
 }

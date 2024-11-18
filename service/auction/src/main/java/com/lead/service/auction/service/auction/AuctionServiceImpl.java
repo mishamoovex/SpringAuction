@@ -40,6 +40,11 @@ public class AuctionServiceImpl implements AuctionService {
         return modelMapper.map(newAuction, AuctionDto.class);
     }
 
+    @Override
+    public void delete(String auctionId) {
+        auctionRepository.deleteById(auctionId);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public boolean isOwner(String auctionId, String ownerId) {
