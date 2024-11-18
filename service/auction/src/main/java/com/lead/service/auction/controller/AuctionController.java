@@ -43,6 +43,7 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.update(request));
     }
 
+
     @GetMapping("{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,

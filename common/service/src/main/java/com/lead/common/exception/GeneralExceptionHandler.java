@@ -74,4 +74,11 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         errors.put("message", e.getMessage());
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(errors);
     }
+
+    @ExceptionHandler(BadRequestDataException.class)
+    public ResponseEntity<?> handleBadRequestDataException(BadRequestDataException e) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(errors);
+    }
 }
