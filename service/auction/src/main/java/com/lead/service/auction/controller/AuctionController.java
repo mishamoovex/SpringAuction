@@ -1,8 +1,10 @@
 package com.lead.service.auction.controller;
 
 import com.lead.security.model.AuthUserDetails;
+import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
+import com.lead.service.auction.models.request.UpdateAuctionRequest;
 import com.lead.service.auction.service.admin.AdminService;
 import com.lead.service.auction.service.auction.AuctionService;
 import jakarta.validation.Valid;
@@ -36,15 +38,30 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.save(userDetails.getId(), request));
     }
 
+    @PutMapping
+    @PreAuthorize("@adminService.isAdmin(#request.auctionId, authentication.principal.id)")
+    public ResponseEntity<AuctionDto> update(@RequestBody @Valid UpdateAuctionRequest request) {
+        return ResponseEntity.ok(auctionService.update(request));
+    }
+
+    @PutMapping("{auctionId}/status")
+    @PreAuthorize("@adminService.isAdmin(#auctionId, authentication.principal.id)")
+    public ResponseEntity<AuctionDto> updateStatus(
+            @PathVariable String auctionId,
+            @RequestParam AuctionStatus newStatus
+    ) {
+        return ResponseEntity.ok(auctionService.updateStatus(auctionId, newStatus));
+    }
+
     @GetMapping("{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
-            @RequestParam String adminId
+            @AuthenticationPrincipal AuthUserDetails userDetails
     ) {
-        return ResponseEntity.ok(adminService.isAdmin(auctionId, adminId));
+        return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
     }
 
-    @PutMapping("{auctionId}/admin")
+    @PostMapping("{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> addAdmin(
             @PathVariable String auctionId,

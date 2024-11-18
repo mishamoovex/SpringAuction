@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
-@Service
+@Service("adminService")
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
