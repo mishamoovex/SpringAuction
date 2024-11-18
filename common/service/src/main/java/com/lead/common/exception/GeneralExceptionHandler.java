@@ -67,4 +67,11 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         errors.put("message", e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errors);
     }
+
+    @ExceptionHandler(BadStateException.class)
+    public ResponseEntity<?> handleBadStateException(BadStateException e) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(errors);
+    }
 }
