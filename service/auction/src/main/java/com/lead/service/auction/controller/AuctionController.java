@@ -61,7 +61,7 @@ public class AuctionController {
         return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
     }
 
-    @PutMapping("{auctionId}/admin")
+    @PostMapping("{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> addAdmin(
             @PathVariable String auctionId,
