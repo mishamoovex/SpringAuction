@@ -14,5 +14,7 @@ public interface AuctionService {
 
     void delete(String auctionId);
 
+    AuctionDto get(String auctionId);
+
     boolean isOwner(String auctionId, String ownerId);
 }

@@ -77,6 +77,12 @@ public class AuctionServiceImpl implements AuctionService {
         auctionRepository.deleteById(auctionId);
     }
 
+    @Override
+    public AuctionDto get(String auctionId) {
+        AuctionEntity entity = findById(auctionId);
+        return modelMapper.map(entity, AuctionDto.class);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public boolean isOwner(String auctionId, String ownerId) {
