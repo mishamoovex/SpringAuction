@@ -39,9 +39,9 @@ public class AuctionController {
     @GetMapping("{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
-            @RequestParam String adminId
+            @AuthenticationPrincipal AuthUserDetails userDetails
     ) {
-        return ResponseEntity.ok(adminService.isAdmin(auctionId, adminId));
+        return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
     }
 
     @PutMapping("{auctionId}/admin")
