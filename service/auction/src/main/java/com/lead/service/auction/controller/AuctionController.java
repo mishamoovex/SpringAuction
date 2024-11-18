@@ -44,7 +44,7 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.update(request));
     }
 
-    @PutMapping("{auctionId}/status")
+    @PutMapping("/{auctionId}/status")
     @PreAuthorize("@adminService.isAdmin(#auctionId, authentication.principal.id)")
     public ResponseEntity<AuctionDto> updateStatus(
             @PathVariable String auctionId,
@@ -53,14 +53,19 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.updateStatus(auctionId, newStatus));
     }
 
-    @DeleteMapping("{auctionId}")
+    @DeleteMapping("/{auctionId}")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> delete(@PathVariable String auctionId) {
         auctionService.delete(auctionId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("{auctionId}/isAdmin")
+    @GetMapping("/{auctionId}")
+    public ResponseEntity<AuctionDto> get(@PathVariable String auctionId) {
+        return ResponseEntity.ok(auctionService.get(auctionId));
+    }
+
+    @GetMapping("/{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
             @AuthenticationPrincipal AuthUserDetails userDetails
@@ -68,7 +73,7 @@ public class AuctionController {
         return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
     }
 
-    @PostMapping("{auctionId}/admin")
+    @PostMapping("/{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> addAdmin(
             @PathVariable String auctionId,
@@ -78,7 +83,7 @@ public class AuctionController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("{auctionId}/admin")
+    @DeleteMapping("/{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> removeAdmin(
             @PathVariable String auctionId,
