@@ -1,11 +1,13 @@
 package com.lead.service.auction.service.auction;
 
+import com.lead.common.exception.BadStateException;
 import com.lead.common.exception.NotFoundException;
 import com.lead.service.auction.exception.InvalidDateRangeException;
 import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.entity.AuctionEntity;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
+import com.lead.service.auction.models.request.UpdateAuctionRequest;
 import com.lead.service.auction.repository.AuctionRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,6 +40,25 @@ public class AuctionServiceImpl implements AuctionService {
 
         AuctionEntity newAuction = auctionRepository.save(entity);
         return modelMapper.map(newAuction, AuctionDto.class);
+    }
+
+    @Transactional
+    @Override
+    public AuctionDto update(UpdateAuctionRequest updateAuctionRequest) {
+        validateDateRange(updateAuctionRequest.getStartTime(), updateAuctionRequest.getEndTime());
+
+        AuctionEntity entity = findById(updateAuctionRequest.getAuctionId());
+
+        if (entity.getStatus() != AuctionStatus.PENDING) {
+            throw new BadStateException("Only pending auctions available for updates");
+        }
+
+        entity.setName(updateAuctionRequest.getName());
+        entity.setStartTime(updateAuctionRequest.getStartTime());
+        entity.setEndTime(updateAuctionRequest.getEndTime());
+
+        AuctionEntity updatedAuction = auctionRepository.save(entity);
+        return modelMapper.map(updatedAuction, AuctionDto.class);
     }
 
     @Override
