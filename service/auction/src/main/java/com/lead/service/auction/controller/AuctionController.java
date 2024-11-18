@@ -3,6 +3,7 @@ package com.lead.service.auction.controller;
 import com.lead.security.model.AuthUserDetails;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
+import com.lead.service.auction.models.request.UpdateAuctionRequest;
 import com.lead.service.auction.service.admin.AdminService;
 import com.lead.service.auction.service.auction.AuctionService;
 import jakarta.validation.Valid;
@@ -34,6 +35,12 @@ public class AuctionController {
             @AuthenticationPrincipal AuthUserDetails userDetails
     ) {
         return ResponseEntity.ok(auctionService.save(userDetails.getId(), request));
+    }
+
+    @PutMapping
+    @PreAuthorize("@adminService.isAdmin(#request.auctionId, authentication.principal.id)")
+    public ResponseEntity<AuctionDto> update(@RequestBody @Valid UpdateAuctionRequest request) {
+        return ResponseEntity.ok(auctionService.update(request));
     }
 
     @GetMapping("{auctionId}/isAdmin")
