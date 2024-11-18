@@ -53,6 +53,13 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.updateStatus(auctionId, newStatus));
     }
 
+    @DeleteMapping("{auctionId}")
+    @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
+    public ResponseEntity<Void> delete(@PathVariable String auctionId) {
+        auctionService.delete(auctionId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
@@ -78,13 +85,6 @@ public class AuctionController {
             @RequestParam String adminId
     ) {
         adminService.removeAdmin(auctionId, adminId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("{auctionId}")
-    @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
-    public ResponseEntity<Void> delete(@PathVariable String auctionId) {
-        auctionService.delete(auctionId);
         return ResponseEntity.noContent().build();
     }
 }
