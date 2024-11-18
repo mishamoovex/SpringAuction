@@ -1,6 +1,7 @@
 package com.lead.service.auction.controller;
 
 import com.lead.security.model.AuthUserDetails;
+import com.lead.service.auction.models.AdminRole;
 import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
@@ -9,6 +10,8 @@ import com.lead.service.auction.service.admin.AdminService;
 import com.lead.service.auction.service.auction.AuctionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,6 +66,17 @@ public class AuctionController {
     @GetMapping("/{auctionId}")
     public ResponseEntity<AuctionDto> get(@PathVariable String auctionId) {
         return ResponseEntity.ok(auctionService.get(auctionId));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<Page<AuctionDto>> getAll(
+            @AuthenticationPrincipal AuthUserDetails userDetails,
+            @RequestParam(required = false) AdminRole adminRole,
+            @RequestParam(required = false) AuctionStatus auctionStatus,
+            Pageable pageable
+    ) {
+        var auctions = auctionService.findAll(userDetails.getId(), adminRole, auctionStatus, pageable);
+        return ResponseEntity.ok(auctions);
     }
 
     @GetMapping("/{auctionId}/isAdmin")

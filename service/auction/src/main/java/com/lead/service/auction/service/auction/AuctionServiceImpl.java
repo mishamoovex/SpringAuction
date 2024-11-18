@@ -3,6 +3,7 @@ package com.lead.service.auction.service.auction;
 import com.lead.common.exception.BadRequestDataException;
 import com.lead.common.exception.BadStateException;
 import com.lead.common.exception.NotFoundException;
+import com.lead.service.auction.models.AdminRole;
 import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.entity.AuctionEntity;
@@ -11,11 +12,18 @@ import com.lead.service.auction.models.request.UpdateAuctionRequest;
 import com.lead.service.auction.repository.AuctionRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+
+import static com.lead.service.auction.repository.AuctionSpecifications.hasAdmin;
+import static com.lead.service.auction.repository.AuctionSpecifications.hasOwner;
+import static com.lead.service.auction.repository.AuctionSpecifications.hasStatus;
 
 @Service("auctionService")
 @AllArgsConstructor
@@ -83,6 +91,18 @@ public class AuctionServiceImpl implements AuctionService {
         return modelMapper.map(entity, AuctionDto.class);
     }
 
+    @Override
+    public Page<AuctionDto> findAll(
+            String userId,
+            AdminRole adminRole,
+            AuctionStatus status,
+            Pageable pageable
+    ) {
+        var spec = createFindAllSpec(userId, adminRole, status);
+        return auctionRepository.findAll(spec, pageable)
+                .map(entity -> modelMapper.map(entity, AuctionDto.class));
+    }
+
     @Transactional(readOnly = true)
     @Override
     public boolean isOwner(String auctionId, String ownerId) {
@@ -122,5 +142,22 @@ public class AuctionServiceImpl implements AuctionService {
                 return false;
             }
         }
+    }
+
+    private Specification<AuctionEntity> createFindAllSpec(
+            String userId,
+            AdminRole adminRole,
+            AuctionStatus status
+    ) {
+        Specification<AuctionEntity> spec = Specification.where(hasStatus(status));
+
+        if (adminRole != null) {
+            switch (adminRole) {
+                case OWNER -> spec = spec.and(hasOwner(userId));
+                case ADMIN -> spec = spec.and(hasAdmin(userId));
+            }
+        }
+
+        return spec;
     }
 }
