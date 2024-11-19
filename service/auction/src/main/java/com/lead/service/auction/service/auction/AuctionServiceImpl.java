@@ -14,16 +14,11 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
-
-import static com.lead.service.auction.repository.AuctionSpecifications.hasAdmin;
-import static com.lead.service.auction.repository.AuctionSpecifications.hasOwner;
-import static com.lead.service.auction.repository.AuctionSpecifications.hasStatus;
 
 @Service("auctionService")
 @AllArgsConstructor
@@ -98,8 +93,12 @@ public class AuctionServiceImpl implements AuctionService {
             AuctionStatus status,
             Pageable pageable
     ) {
-        var spec = createFindAllSpec(userId, adminRole, status);
-        return auctionRepository.findAll(spec, pageable)
+        return auctionRepository.getPagedAuctions(
+                        resolveId(userId, adminRole, AdminRole.OWNER),
+                        resolveId(userId, adminRole, AdminRole.ADMIN),
+                        status,
+                        pageable
+                )
                 .map(entity -> modelMapper.map(entity, AuctionDto.class));
     }
 
@@ -144,20 +143,7 @@ public class AuctionServiceImpl implements AuctionService {
         }
     }
 
-    private Specification<AuctionEntity> createFindAllSpec(
-            String userId,
-            AdminRole adminRole,
-            AuctionStatus status
-    ) {
-        Specification<AuctionEntity> spec = Specification.where(hasStatus(status));
-
-        if (adminRole != null) {
-            switch (adminRole) {
-                case OWNER -> spec = spec.and(hasOwner(userId));
-                case ADMIN -> spec = spec.and(hasAdmin(userId));
-            }
-        }
-
-        return spec;
+    private String resolveId(String userId, AdminRole currentRole, AdminRole targetRole) {
+        return currentRole == targetRole ? userId : null;
     }
 }
