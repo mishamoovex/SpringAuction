@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 @Setter
 @Entity(name = "lot")
 public class LotEntity extends BaseEntity {
+    @Column(nullable = false)
+    private String auctionId;
     @Column(nullable = false, length = 100)
     private String title;
     @Column(nullable = false)
