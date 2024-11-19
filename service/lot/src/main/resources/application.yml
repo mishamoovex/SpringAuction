@@ -1,0 +1,22 @@
+server:
+  port: 8084
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+spring:
+  application:
+    name: lot-service
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://localhost:5432/lots
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog.xml
+    enabled: true
