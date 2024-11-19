@@ -1,4 +1,4 @@
-package com.lead.service.lot.service;
+package com.lead.service.lot.service.lot;
 
 import com.lead.service.lot.models.dto.LotDto;
 import com.lead.service.lot.models.entity.LotEntity;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service("lotService")
 @AllArgsConstructor
-public class LotServiceImpl implements LotService {
+class LotServiceImpl implements LotService {
 
     private final LotRepository lotRepository;
     private final ModelMapper modelMapper;

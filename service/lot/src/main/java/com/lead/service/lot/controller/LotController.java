@@ -2,7 +2,7 @@ package com.lead.service.lot.controller;
 
 import com.lead.service.lot.models.dto.LotDto;
 import com.lead.service.lot.models.request.CreateLotRequest;
-import com.lead.service.lot.service.LotService;
+import com.lead.service.lot.service.lot.LotService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
