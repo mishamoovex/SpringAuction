@@ -19,7 +19,7 @@ public interface AuctionService {
 
     AuctionDto get(String auctionId);
 
-    Page<AuctionDto> findAll(String userId, AdminRole role, AuctionStatus status, Pageable pageable);
+    Page<AuctionDto> getAll(String userId, AdminRole role, AuctionStatus status, Pageable pageable);
 
     boolean isOwner(String auctionId, String ownerId);
 }

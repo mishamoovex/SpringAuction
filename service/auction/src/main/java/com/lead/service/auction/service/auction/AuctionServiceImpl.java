@@ -87,7 +87,7 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<AuctionDto> findAll(
+    public Page<AuctionDto> getAll(
             String userId,
             AdminRole adminRole,
             AuctionStatus status,

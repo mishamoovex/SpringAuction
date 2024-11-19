@@ -75,7 +75,7 @@ public class AuctionController {
             @RequestParam(required = false) AuctionStatus auctionStatus,
             Pageable pageable
     ) {
-        var auctions = auctionService.findAll(userDetails.getId(), adminRole, auctionStatus, pageable);
+        var auctions = auctionService.getAll(userDetails.getId(), adminRole, auctionStatus, pageable);
         return ResponseEntity.ok(auctions);
     }
 
