@@ -1,12 +1,20 @@
 package com.lead.service.lot.models.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
-public record LotDto(
-        String auctionId,
-        String title,
-        String description,
-        String imageUrl,
-        BigDecimal initialPrice
-) {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class LotDto {
+    private String auctionId;
+    private String title;
+    private String description;
+    private String imageUrl;
+    private BigDecimal initialPrice;
 }
