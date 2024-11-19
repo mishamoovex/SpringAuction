@@ -1,6 +1,7 @@
 package com.lead.service.auction.controller;
 
 import com.lead.security.model.AuthUserDetails;
+import com.lead.service.auction.models.AdminRole;
 import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.request.CreateAuctionRequest;
@@ -9,6 +10,8 @@ import com.lead.service.auction.service.admin.AdminService;
 import com.lead.service.auction.service.auction.AuctionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,7 +47,7 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.update(request));
     }
 
-    @PutMapping("{auctionId}/status")
+    @PutMapping("/{auctionId}/status")
     @PreAuthorize("@adminService.isAdmin(#auctionId, authentication.principal.id)")
     public ResponseEntity<AuctionDto> updateStatus(
             @PathVariable String auctionId,
@@ -53,7 +56,30 @@ public class AuctionController {
         return ResponseEntity.ok(auctionService.updateStatus(auctionId, newStatus));
     }
 
-    @GetMapping("{auctionId}/isAdmin")
+    @DeleteMapping("/{auctionId}")
+    @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
+    public ResponseEntity<Void> delete(@PathVariable String auctionId) {
+        auctionService.delete(auctionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{auctionId}")
+    public ResponseEntity<AuctionDto> get(@PathVariable String auctionId) {
+        return ResponseEntity.ok(auctionService.get(auctionId));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<Page<AuctionDto>> getAll(
+            @AuthenticationPrincipal AuthUserDetails userDetails,
+            @RequestParam(required = false) AdminRole adminRole,
+            @RequestParam(required = false) AuctionStatus auctionStatus,
+            Pageable pageable
+    ) {
+        var auctions = auctionService.getAll(userDetails.getId(), adminRole, auctionStatus, pageable);
+        return ResponseEntity.ok(auctions);
+    }
+
+    @GetMapping("/{auctionId}/isAdmin")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
             @AuthenticationPrincipal AuthUserDetails userDetails
@@ -61,7 +87,7 @@ public class AuctionController {
         return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
     }
 
-    @PostMapping("{auctionId}/admin")
+    @PostMapping("/{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> addAdmin(
             @PathVariable String auctionId,
@@ -71,20 +97,13 @@ public class AuctionController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("{auctionId}/admin")
+    @DeleteMapping("/{auctionId}/admin")
     @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
     public ResponseEntity<Void> removeAdmin(
             @PathVariable String auctionId,
             @RequestParam String adminId
     ) {
         adminService.removeAdmin(auctionId, adminId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("{auctionId}")
-    @PreAuthorize("@auctionService.isOwner(#auctionId,authentication.principal.id)")
-    public ResponseEntity<Void> delete(@PathVariable String auctionId) {
-        auctionService.delete(auctionId);
         return ResponseEntity.noContent().build();
     }
 }

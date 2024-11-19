@@ -3,6 +3,7 @@ package com.lead.service.auction.service.auction;
 import com.lead.common.exception.BadRequestDataException;
 import com.lead.common.exception.BadStateException;
 import com.lead.common.exception.NotFoundException;
+import com.lead.service.auction.models.AdminRole;
 import com.lead.service.auction.models.AuctionStatus;
 import com.lead.service.auction.models.dto.AuctionDto;
 import com.lead.service.auction.models.entity.AuctionEntity;
@@ -11,6 +12,8 @@ import com.lead.service.auction.models.request.UpdateAuctionRequest;
 import com.lead.service.auction.repository.AuctionRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,6 +80,28 @@ public class AuctionServiceImpl implements AuctionService {
         auctionRepository.deleteById(auctionId);
     }
 
+    @Override
+    public AuctionDto get(String auctionId) {
+        AuctionEntity entity = findById(auctionId);
+        return modelMapper.map(entity, AuctionDto.class);
+    }
+
+    @Override
+    public Page<AuctionDto> getAll(
+            String userId,
+            AdminRole adminRole,
+            AuctionStatus status,
+            Pageable pageable
+    ) {
+        return auctionRepository.getPagedAuctions(
+                        resolveId(userId, adminRole, AdminRole.OWNER),
+                        resolveId(userId, adminRole, AdminRole.ADMIN),
+                        status,
+                        pageable
+                )
+                .map(entity -> modelMapper.map(entity, AuctionDto.class));
+    }
+
     @Transactional(readOnly = true)
     @Override
     public boolean isOwner(String auctionId, String ownerId) {
@@ -116,5 +141,9 @@ public class AuctionServiceImpl implements AuctionService {
                 return false;
             }
         }
+    }
+
+    private String resolveId(String userId, AdminRole currentRole, AdminRole targetRole) {
+        return currentRole == targetRole ? userId : null;
     }
 }
