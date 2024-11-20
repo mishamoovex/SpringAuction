@@ -8,4 +8,6 @@ import java.util.List;
 public interface LotRepository extends CrudRepository<LotEntity, String> {
 
     List<LotEntity> findAllByAuctionId(String auctionId);
+
+    void deleteAllByAuctionId(String auctionId);
 }

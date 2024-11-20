@@ -55,4 +55,10 @@ public class LotController {
         lotService.deleteById(lotId);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllByAuction(@RequestParam String auctionId) {
+        lotService.deleteAllByAuction(auctionId);
+        return ResponseEntity.noContent().build();
+    }
 }

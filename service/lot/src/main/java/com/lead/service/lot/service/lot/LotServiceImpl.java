@@ -9,6 +9,7 @@ import com.lead.service.lot.repository.LotRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ class LotServiceImpl implements LotService {
     private final LotRepository lotRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public LotDto save(CreateLotRequest createLotRequest) {
         LotEntity entity = LotEntity.builder()
@@ -33,6 +35,7 @@ class LotServiceImpl implements LotService {
         return modelMapper.map(newLot, LotDto.class);
     }
 
+    @Transactional
     @Override
     public LotDto update(UpdateLotRequest updateLotRequest) {
         LotEntity entity = findById(updateLotRequest.getLotId());
@@ -46,12 +49,14 @@ class LotServiceImpl implements LotService {
         return modelMapper.map(updatedLot, LotDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public LotDto getById(String id) {
         LotEntity entity = findById(id);
         return modelMapper.map(entity, LotDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<LotDto> getAllByAuction(String auctionId) {
         return lotRepository.findAllByAuctionId(auctionId)
@@ -60,9 +65,16 @@ class LotServiceImpl implements LotService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public void deleteById(String lotId) {
         lotRepository.deleteById(lotId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllByAuction(String auctionId) {
+        lotRepository.deleteAllByAuctionId(auctionId);
     }
 
     private LotEntity findById(String lotId) {

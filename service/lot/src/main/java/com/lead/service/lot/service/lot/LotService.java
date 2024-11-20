@@ -16,4 +16,6 @@ public interface LotService {
     List<LotDto> getAllByAuction(String auctionId);
 
     void deleteById(String lotId);
+
+    void deleteAllByAuction(String auctionId);
 }
