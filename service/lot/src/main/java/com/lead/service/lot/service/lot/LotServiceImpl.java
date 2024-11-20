@@ -28,4 +28,9 @@ class LotServiceImpl implements LotService {
         LotEntity newLot = lotRepository.save(entity);
         return modelMapper.map(newLot, LotDto.class);
     }
+
+    @Override
+    public void deleteById(String lotId) {
+        lotRepository.deleteById(lotId);
+    }
 }
