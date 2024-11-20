@@ -12,6 +12,6 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public boolean isAdmin(String auctionId, String userId) {
-        return auctionServiceClient.isAdmin(auctionId);
+        return auctionServiceClient.isAdmin(auctionId, userId);
     }
 }

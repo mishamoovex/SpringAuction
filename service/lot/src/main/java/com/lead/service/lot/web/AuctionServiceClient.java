@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface AuctionServiceClient {
 
-    @GetMapping("/{auctionId}/isAdmin")
-    boolean isAdmin(@PathVariable String auctionId);
+    @GetMapping("/{auctionId}/isAdmin/{adminId}")
+    boolean isAdmin(
+            @PathVariable String auctionId,
+            @PathVariable String adminId
+    );
 }

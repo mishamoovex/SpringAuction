@@ -79,12 +79,12 @@ public class AuctionController {
         return ResponseEntity.ok(auctions);
     }
 
-    @GetMapping("/{auctionId}/isAdmin")
+    @GetMapping("/{auctionId}/isAdmin/{adminId}")
     public ResponseEntity<Boolean> isAdmin(
             @PathVariable String auctionId,
-            @AuthenticationPrincipal AuthUserDetails userDetails
+            @PathVariable String adminId
     ) {
-        return ResponseEntity.ok(adminService.isAdmin(auctionId, userDetails.getId()));
+        return ResponseEntity.ok(adminService.isAdmin(auctionId, adminId));
     }
 
     @PostMapping("/{auctionId}/admin")
