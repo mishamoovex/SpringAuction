@@ -1,5 +1,7 @@
-package com.lead.service.lot.models.dto;
+package com.lead.service.lot.models.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +13,15 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LotDto {
-    private String id;
-    private String auctionId;
+public final class UpdateLotRequest {
+    @NotBlank
+    private String lotId;
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
+    @NotBlank
     private String imageUrl;
+    @NotNull
     private BigDecimal initialPrice;
 }
