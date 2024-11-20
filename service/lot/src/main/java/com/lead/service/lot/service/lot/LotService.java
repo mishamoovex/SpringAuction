@@ -9,5 +9,7 @@ public interface LotService {
 
     LotDto update(UpdateLotRequest updateLotRequest);
 
+    LotDto getById(String id);
+
     void deleteById(String lotId);
 }

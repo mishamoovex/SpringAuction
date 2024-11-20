@@ -45,6 +45,12 @@ class LotServiceImpl implements LotService {
     }
 
     @Override
+    public LotDto getById(String id) {
+        LotEntity entity = findById(id);
+        return modelMapper.map(entity, LotDto.class);
+    }
+
+    @Override
     public void deleteById(String lotId) {
         lotRepository.deleteById(lotId);
     }
