@@ -24,19 +24,19 @@ public class LotController {
     private LotService lotService;
 
     @PostMapping
-    @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
+    @PreAuthorize("@authorizationService.isAdmin(#request.auctionId, authentication.principal.id)")
     public ResponseEntity<LotDto> save(@RequestBody @Valid CreateLotRequest request) {
         return ResponseEntity.ok(lotService.save(request));
     }
 
     @PutMapping
-    @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
+    @PreAuthorize("@authorizationService.isAdmin(#request.auctionId, authentication.principal.id)")
     public ResponseEntity<LotDto> update(@RequestBody @Valid UpdateLotRequest request) {
         return ResponseEntity.ok(lotService.update(request));
     }
 
     @DeleteMapping("/{auctionId}")
-    @PreAuthorize("@auctionService.isAdmin(#auctionId, authentication.principal.id)")
+    @PreAuthorize("@authorizationService.isAdmin(#auctionId, authentication.principal.id)")
     public ResponseEntity<Void> delete(@PathVariable("auctionId") String auctionId) {
         lotService.deleteById(auctionId);
         return ResponseEntity.noContent().build();

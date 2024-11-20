@@ -1,12 +1,12 @@
-package com.lead.service.lot.service.auction;
+package com.lead.service.lot.service.authorization;
 
 import com.lead.service.lot.web.AuctionServiceClient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service("auctionService")
+@Service("authorizationService")
 @AllArgsConstructor
-public class AuctionServiceImpl implements AuctionService {
+public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final AuctionServiceClient auctionServiceClient;
 
