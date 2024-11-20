@@ -57,6 +57,7 @@ public class LotController {
     }
 
     @DeleteMapping("/deleteAll")
+    @PreAuthorize("@authorizationService.isAuctionAdmin(#auctionId, authentication.principal.id)")
     public ResponseEntity<Void> deleteAllByAuction(@RequestParam String auctionId) {
         lotService.deleteAllByAuction(auctionId);
         return ResponseEntity.noContent().build();
