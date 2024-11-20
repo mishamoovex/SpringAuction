@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("lotService")
 @AllArgsConstructor
 class LotServiceImpl implements LotService {
@@ -48,6 +50,14 @@ class LotServiceImpl implements LotService {
     public LotDto getById(String id) {
         LotEntity entity = findById(id);
         return modelMapper.map(entity, LotDto.class);
+    }
+
+    @Override
+    public List<LotDto> getAllByAuction(String auctionId) {
+        return lotRepository.findAllByAuctionId(auctionId)
+                .stream()
+                .map((entity) -> modelMapper.map(entity, LotDto.class))
+                .toList();
     }
 
     @Override
