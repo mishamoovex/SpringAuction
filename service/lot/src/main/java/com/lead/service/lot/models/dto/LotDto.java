@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class LotDto {
+    private String id;
     private String auctionId;
     private String title;
     private String description;
