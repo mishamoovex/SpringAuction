@@ -4,12 +4,14 @@ import com.lead.service.lot.models.dto.LotDto;
 import com.lead.service.lot.models.request.CreateLotRequest;
 import com.lead.service.lot.models.request.UpdateLotRequest;
 import com.lead.service.lot.service.lot.LotService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +25,13 @@ public class LotController {
 
     @PostMapping
     @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
-    public ResponseEntity<LotDto> save(@RequestBody CreateLotRequest request) {
+    public ResponseEntity<LotDto> save(@RequestBody @Valid CreateLotRequest request) {
         return ResponseEntity.ok(lotService.save(request));
     }
 
-    @PostMapping
+    @PutMapping
     @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
-    public ResponseEntity<LotDto> update(@RequestBody UpdateLotRequest request) {
+    public ResponseEntity<LotDto> update(@RequestBody @Valid UpdateLotRequest request) {
         return ResponseEntity.ok(lotService.update(request));
     }
 
