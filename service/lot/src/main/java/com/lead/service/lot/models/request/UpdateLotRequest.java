@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 public final class UpdateLotRequest {
     @NotBlank
     private String lotId;
+    @NotNull
+    private String auctionId;
     @NotBlank
     private String title;
     @NotBlank

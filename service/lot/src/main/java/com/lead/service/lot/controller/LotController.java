@@ -2,6 +2,7 @@ package com.lead.service.lot.controller;
 
 import com.lead.service.lot.models.dto.LotDto;
 import com.lead.service.lot.models.request.CreateLotRequest;
+import com.lead.service.lot.models.request.UpdateLotRequest;
 import com.lead.service.lot.service.lot.LotService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,12 @@ public class LotController {
     @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
     public ResponseEntity<LotDto> save(@RequestBody CreateLotRequest request) {
         return ResponseEntity.ok(lotService.save(request));
+    }
+
+    @PostMapping
+    @PreAuthorize("@auctionService.isAdmin(#request.auctionId, authentication.principal.id)")
+    public ResponseEntity<LotDto> update(@RequestBody UpdateLotRequest request) {
+        return ResponseEntity.ok(lotService.update(request));
     }
 
     @DeleteMapping("/{auctionId}")
