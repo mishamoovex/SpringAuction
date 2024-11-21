@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     implementation(libs.spring.web)
+    implementation(libs.spring.transaction)
     implementation(libs.hibernate)
     implementation(libs.model.mapper)
     implementation(libs.spring.validation)

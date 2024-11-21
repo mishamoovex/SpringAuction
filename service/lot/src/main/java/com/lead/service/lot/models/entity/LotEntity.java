@@ -3,6 +3,7 @@ package com.lead.service.lot.models.entity;
 import com.lead.common.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,4 +29,6 @@ public class LotEntity extends BaseEntity {
     private String imageUrl;
     @Column(nullable = false)
     private BigDecimal initialPrice;
+    @Version
+    private Integer version;
 }
