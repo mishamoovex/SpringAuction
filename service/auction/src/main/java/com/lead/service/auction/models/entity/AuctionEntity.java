@@ -10,6 +10,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,4 +45,7 @@ public class AuctionEntity extends BaseEntity {
     )
     @Column(name = "admin_id", nullable = false)
     private Set<String> administrators;
+
+    @Version
+    private Integer version;
 }
