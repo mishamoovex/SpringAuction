@@ -61,6 +61,7 @@ public class AuctionServiceImpl implements AuctionService {
         return modelMapper.map(updatedAuction, AuctionDto.class);
     }
 
+    @Transactional
     @Override
     public AuctionDto updateStatus(String auctionId, AuctionStatus status) {
         AuctionEntity entity = findById(auctionId);
@@ -75,17 +76,20 @@ public class AuctionServiceImpl implements AuctionService {
         return modelMapper.map(updatedAuction, AuctionDto.class);
     }
 
+    @Transactional
     @Override
     public void delete(String auctionId) {
         auctionRepository.deleteById(auctionId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public AuctionDto get(String auctionId) {
         AuctionEntity entity = findById(auctionId);
         return modelMapper.map(entity, AuctionDto.class);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<AuctionDto> getAll(
             String userId,
