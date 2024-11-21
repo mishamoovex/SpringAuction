@@ -1,0 +1,2 @@
+ALTER TABLE auction
+    ADD version INTEGER DEFAULT 0 NOT NULL;
